@@ -1,5 +1,5 @@
 #
-# turtle.py: a Tkinter based turtle graphics module for Python
+# fudo.py: a Tkinter based turtle graphics module for Python, in isiXhosa 
 # fudo(turtle) 0.1 - yePython 3 - 2022
 #
 # Fudo Copyright (C) 2006 - 2010  Gregor Lingl
@@ -39,7 +39,7 @@ imifanekiso inokuzotywa ngokulula.
 
 ----- fudo.py
 
-This module is an translated version of the extended reimplementation of turtle.py from the
+This module is a translated version of the extended reimplementation of turtle.py from the
 Python standard distribution up to Python 2.5. (See: https://www.python.org)
 
 It tries to keep the merits of turtle.py and to be (nearly) 100%
@@ -127,7 +127,7 @@ _tg_screen_functions = ['addshape', 'bgcolor', 'bgpic', 'bye',
         'register_shape', 'resetscreen', 'screensize', 'setup',
         'setworldcoordinates', 'textinput', 'title', 'tracer', 'turtles', 'update',
         'window_height', 'window_width']
-_tg_turtle_functions = ['back', 'backward', 'begin_fill', 'begin_poly', 'bk',
+_tg_turtle_functions = ['umva', 'begin_fill', 'begin_poly', 'uv',
         'circle', 'clear', 'clearstamp', 'clearstamps', 'clone', 'color',
         'degrees', 'distance', 'dot', 'down', 'end_fill', 'end_poly', 'pb',
         'fillcolor', 'filling', 'phambili', 'get_poly', 'getpen', 'getscreen', 'get_shapepoly',
@@ -145,7 +145,7 @@ _tg_utilities = ['write_docstringdict', 'done']
 __all__ = (_tg_classes + _tg_screen_functions + _tg_turtle_functions +
            _tg_utilities + ['Terminator']) # + _math_functions)
 
-_alias_list = ['addshape', 'backward', 'bk', 'pb', 'ht', 'lt', 'pd', 'pos',
+_alias_list = ['addshape', 'uv', 'pb', 'ht', 'lt', 'pd', 'pos',
                'pu', 'rt', 'seth', 'setpos', 'setposition', 'st',
                'turtlesize', 'up', 'width']
 
@@ -1640,21 +1640,21 @@ class TNavigator(object):
         """
         self._go(distance)
 
-    def back(self, distance):
-        """Move the turtle backward by distance.
+    def umva(self, distance):
+        """Shenxela ufudo umva umgama.
 
-        Aliases: back | backward | bk
+        Aliases: umva | uv
 
         Argument:
         distance -- a number
 
-        Move the turtle backward by distance, opposite to the direction the
-        turtle is headed. Do not change the turtle's heading.
+        Shenxisa ufudo ngasemva ngomgama, ngokuchaseneyo necala eliya ngakulo
+        ufudo lubhadlile. Musa ukutshintsha isihloko sofudo.
 
         Example (for a Fudo instance named turtle):
         >>> turtle.position()
         (0.00, 0.00)
-        >>> turtle.backward(30)
+        >>> turtle.umva(30)
         >>> turtle.position()
         (-30.00, 0.00)
         """
@@ -2012,8 +2012,7 @@ class TNavigator(object):
         """dummy method - to be overwritten by child class"""
 
     pb = phambili
-    bk = back
-    backward = back
+    uv = umva
     rt = right
     lt = left
     position = pos
@@ -4007,7 +4006,7 @@ if __name__ == "__main__":
         reset()
         tracer(True)
         up()
-        backward(100)
+        umva(100)
         down()
         # draw 3 squares; the last filled
         width(3)

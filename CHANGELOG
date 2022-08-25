@@ -1,3 +1,10 @@
-0.0.1 2022-07-31
-Added fudo.py for isiXhosa translation 
+## [0.0.2] 2022-08-26
+### Added
+ - fudo.py translated back -> umva (uv)
+### Changed
+ - minor comment translations
+
+## [0.0.1] 2022-07-31
+### Added 
+ - fudo.py for isiXhosa translation 
  - translated forward -> phambili (pb)
