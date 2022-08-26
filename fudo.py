@@ -32,7 +32,7 @@ nguWally Feurzig kunye noSeymour Papert ngo-1966.
 Yiba nomfanekiso wofudo lwerobhothi oluqala ku- (0, 0) kwinqwelo-moya ye-x. Emva kwe ``import ufudo``, lunike
 umyalelo turtle.phambili(15), kwaye iyashukuma (on-screen!) 15 pixels in
 icala elijonge ngakulo, lizoba umgca njengoko lihamba. Yinike i
-umyalelo turtle.right(25), kwaye ijikeleza-endaweni 25 degrees ngokwewotshi.
+umyalelo turtle.ekunene(25), kwaye ijikeleza-endaweni 25 degrees ngokwewotshi.
 
 Ngokudibanisa le miyalelo kunye nezinye ezifanayo, iimilo ezintsonkothileyo kunye
 imifanekiso inokuzotywa ngokulula.
@@ -132,9 +132,9 @@ _tg_turtle_functions = ['umva', 'begin_fill', 'begin_poly', 'uv',
         'degrees', 'distance', 'dot', 'down', 'end_fill', 'end_poly', 'pb',
         'fillcolor', 'filling', 'phambili', 'get_poly', 'getpen', 'getscreen', 'get_shapepoly',
         'getturtle', 'goto', 'heading', 'hideturtle', 'home', 'ht', 'isdown',
-        'isvisible', 'left', 'lt', 'onclick', 'ondrag', 'onrelease', 'pd',
+        'isvisible', 'ekhohlo', 'kl', 'onclick', 'ondrag', 'onrelease', 'pd',
         'pen', 'pencolor', 'pendown', 'pensize', 'penup', 'pos', 'position',
-        'pu', 'radians', 'right', 'reset', 'resizemode', 'rt',
+        'pu', 'radians', 'ekunene', 'reset', 'resizemode', 'kn',
         'seth', 'setheading', 'setpos', 'setposition', 'settiltangle',
         'setundobuffer', 'setx', 'sety', 'shape', 'shapesize', 'shapetransform', 'shearfactor', 'showturtle',
         'speed', 'st', 'stamp', 'tilt', 'tiltangle', 'towards',
@@ -145,8 +145,8 @@ _tg_utilities = ['write_docstringdict', 'done']
 __all__ = (_tg_classes + _tg_screen_functions + _tg_turtle_functions +
            _tg_utilities + ['Terminator']) # + _math_functions)
 
-_alias_list = ['addshape', 'uv', 'pb', 'ht', 'lt', 'pd', 'pos',
-               'pu', 'rt', 'seth', 'setpos', 'setposition', 'st',
+_alias_list = ['addshape', 'uv', 'pb', 'ht', 'kl', 'pd', 'pos',
+               'pu', 'kn', 'seth', 'setpos', 'setposition', 'st',
                'turtlesize', 'up', 'width']
 
 _CFG = {"width" : 0.5,               # Screen
@@ -1262,7 +1262,7 @@ class FudoScreen(FudoScreenBase):
         >>> dist = 2
         >>> for i in range(200):
         ...     pb(dist)
-        ...     rt(90)
+        ...     kn(90)
         ...     dist += 2
         """
         if n is None:
@@ -1381,7 +1381,7 @@ class FudoScreen(FudoScreenBase):
 
         >>> def f():
         ...     pb(50)
-        ...     lt(60)
+        ...     kl(60)
         ...
         >>> screen.onkey(f, "Up")
         >>> screen.listen()
@@ -1413,7 +1413,7 @@ class FudoScreen(FudoScreenBase):
 
         >>> def f():
         ...     pb(50)
-        ...     lt(60)
+        ...     kl(60)
         ...
         >>> screen.onkeypress(f, "Up")
         >>> screen.listen()
@@ -1454,7 +1454,7 @@ class FudoScreen(FudoScreenBase):
         >>> def f():
         ...     if running:
         ...             pb(50)
-        ...             lt(60)
+        ...             kl(60)
         ...             screen.ontimer(f, 250)
         ...
         >>> f()   # makes the turtle marching around
@@ -1576,7 +1576,7 @@ class TNavigator(object):
         360 degrees.
 
         Example (for a Fudo instance named turtle):
-        >>> turtle.left(90)
+        >>> turtle.ekhohlo(90)
         >>> turtle.heading()
         90
 
@@ -1660,44 +1660,43 @@ class TNavigator(object):
         """
         self._go(-distance)
 
-    def right(self, angle):
-        """Turn turtle right by angle units.
+    def ekunene(self, angle):
+        """Jika ufudo ngasekunene ngeeyunithi ze-engile.
 
-        Aliases: right | rt
+        Aliases: ekunene | kn
 
         Argument:
         angle -- a number (integer or float)
 
-        Turn turtle right by angle units. (Units are by default degrees,
+        Turn turtle ekunene by angle units. (Units are by default degrees,
         but can be set via the degrees() and radians() functions.)
         Angle orientation depends on mode. (See this.)
 
         Example (for a Fudo instance named turtle):
         >>> turtle.heading()
         22.0
-        >>> turtle.right(45)
+        >>> turtle.ekunene(45)
         >>> turtle.heading()
         337.0
         """
         self._rotate(-angle)
 
-    def left(self, angle):
-        """Turn turtle left by angle units.
-
-        Aliases: left | lt
+    def ekhohlo(self, angle):
+        """Jika ufudo ngasekhohlo ngeeyunithi engile.
+        Aliases: ekhohlo | kl
 
         Argument:
         angle -- a number (integer or float)
 
-        Turn turtle left by angle units. (Units are by default degrees,
-        but can be set via the degrees() and radians() functions.)
-        Angle orientation depends on mode. (See this.)
+        Jika ufudo ngasekhohlo ngeeyunithi engile. (Iiyunithi zizidanga,
+        kodwa ingacwangciswa ngeedigri () kunye neeradians () imisebenzi.)
+        Ukuqhelaniswa ne-engile kuxhomekeke kwimowudi. (Bona oku.)
 
-        Example (for a Fudo instance named turtle):
-        >>> turtle.heading()
+        Example (for a Fudo instance named fudo):
+        >>> fudo.heading()
         22.0
-        >>> turtle.left(45)
-        >>> turtle.heading()
+        >>> fudo.ekhohlo(45)
+        >>> fudo.heading()
         67.0
         """
         self._rotate(angle)
@@ -1722,7 +1721,7 @@ class TNavigator(object):
 
         Example (for a Fudo instance named turtle):
         >>> reset()
-        >>> turtle.left(60)
+        >>> turtle.ekhohlo(60)
         >>> turtle.forward(100)
         >>> print turtle.xcor()
         50.0
@@ -1736,7 +1735,7 @@ class TNavigator(object):
 
         Example (for a Fudo instance named turtle):
         >>> reset()
-        >>> turtle.left(60)
+        >>> turtle.ekhohlo(60)
         >>> turtle.forward(100)
         >>> print turtle.ycor()
         86.6025403784
@@ -1902,7 +1901,7 @@ class TNavigator(object):
         No arguments.
 
         Example (for a Fudo instance named turtle):
-        >>> turtle.left(67)
+        >>> turtle.ekhohlo(67)
         >>> turtle.heading()
         67.0
         """
@@ -2013,8 +2012,8 @@ class TNavigator(object):
 
     pb = phambili
     uv = umva
-    rt = right
-    lt = left
+    kn = ekunene
+    kl = ekhohlo
     position = pos
     setpos = goto
     setposition = goto
@@ -2160,7 +2159,7 @@ class TPen(object):
 
         Attention:
         speed = 0 : *no* animation takes place. forward/back makes turtle jump
-        and likewise left/right make the turtle turn instantly.
+        and likewise ekhohlo/ekunene make the turtle turn instantly.
 
         Example (for a Fudo instance named turtle):
         >>> turtle.speed(3)
@@ -2687,7 +2686,7 @@ class RawFudo(TPen, TNavigator):
         >>> dist = 2
         >>> for i in range(200):
         ...     turtle.pb(dist)
-        ...     turtle.rt(90)
+        ...     turtle.kn(90)
         ...     dist += 2
         """
         return self.screen.tracer(flag, delay)
@@ -3552,7 +3551,7 @@ class RawFudo(TPen, TNavigator):
         Example for the anonymous turtle, i. e. the procedural way:
 
         >>> def turn(x, y):
-        ...     left(360)
+        ...     ekhohlo(360)
         ...
         >>> onclick(turn)  # Now clicking into the turtle will turn it.
         >>> onclick(None)  # event-binding will be removed
@@ -3649,7 +3648,7 @@ class RawFudo(TPen, TNavigator):
 
         Example (for a Fudo instance named turtle):
         >>> for i in range(4):
-        ...     turtle.pb(50); turtle.lt(80)
+        ...     turtle.pb(50); turtle.kl(80)
         ...
         >>> for i in range(8):
         ...     turtle.undo()
@@ -4015,7 +4014,7 @@ if __name__ == "__main__":
                 begin_fill()
             for _ in range(4):
                 phambili(20)
-                left(90)
+                ekhohlo(90)
             if i == 2:
                 color("maroon")
                 end_fill()
@@ -4027,11 +4026,11 @@ if __name__ == "__main__":
         # move out of the way
         tracer(False)
         up()
-        right(90)
+        ekunene(90)
         phambili(100)
-        right(90)
+        ekunene(90)
         phambili(100)
-        right(180)
+        ekunene(180)
         down()
         # some text
         write("startstart", 1)
@@ -4040,17 +4039,17 @@ if __name__ == "__main__":
         # staircase
         for i in range(5):
             phambili(20)
-            left(90)
+            ekhohlo(90)
             phambili(20)
-            right(90)
+            ekunene(90)
         # filled staircase
         tracer(True)
         begin_fill()
         for i in range(5):
             phambili(20)
-            left(90)
+            ekhohlo(90)
             phambili(20)
-            right(90)
+            ekunene(90)
         end_fill()
         # more text
 
@@ -4061,7 +4060,7 @@ if __name__ == "__main__":
         pensize(3)
         setheading(towards(0, 0))
         radius = distance(0, 0)/2.0
-        rt(90)
+        kn(90)
         for _ in range(18):
             switchpen()
             circle(radius, 10)
@@ -4069,40 +4068,40 @@ if __name__ == "__main__":
         while undobufferentries():
             undo()
         reset()
-        lt(90)
+        kl(90)
         colormode(255)
         laenge = 10
         pencolor("green")
         pensize(3)
-        lt(180)
+        kl(180)
         for i in range(-2, 16):
             if i > 0:
                 begin_fill()
                 fillcolor(255-15*i, 0, 15*i)
             for _ in range(3):
                 pb(laenge)
-                lt(120)
+                kl(120)
             end_fill()
             laenge += 10
-            lt(15)
+            kl(15)
             speed((speed()+1)%12)
         #end_fill()
 
-        lt(120)
+        kl(120)
         pu()
         pb(70)
-        rt(30)
+        kn(30)
         pd()
         color("red","yellow")
         speed(0)
         begin_fill()
         for _ in range(4):
             circle(50, 90)
-            rt(90)
+            kn(90)
             pb(30)
-            rt(90)
+            kn(90)
         end_fill()
-        lt(90)
+        kl(90)
         pu()
         pb(30)
         pd()
@@ -4114,11 +4113,11 @@ if __name__ == "__main__":
         turtle.resizemode("auto")
         turtle.shape("turtle")
         turtle.reset()
-        turtle.left(90)
+        turtle.ekhohlo(90)
         turtle.speed(0)
         turtle.up()
         turtle.goto(280, 40)
-        turtle.lt(30)
+        turtle.kl(30)
         turtle.down()
         turtle.speed(6)
         turtle.color("blue","orange")
@@ -4128,7 +4127,7 @@ if __name__ == "__main__":
         count = 1
         while tri.distance(turtle) > 4:
             turtle.pb(3.5)
-            turtle.lt(0.6)
+            turtle.kl(0.6)
             tri.setheading(tri.towards(turtle))
             tri.pb(4)
             if count % 20 == 0:
