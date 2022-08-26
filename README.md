@@ -50,7 +50,7 @@ turns the turtle right 90 degrees
 moves the turtle back 100 pixels
 
 >>> thabo.ekhohlo(90)
-turns the turtle right 90 degrees
+turns the turtle left 90 degrees
 
 ```
 
