@@ -102,7 +102,7 @@ extensions in mind. These will be commented and documented elsewhere.
 
 """
 
-_ver = "fudo(turtle) 0.1 - yePython 3 - 2022"
+_ver = "fudo(turtle) 0.0.3 - yePython 3 - 2022"
 
 print(_ver)
 

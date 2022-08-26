@@ -1,4 +1,14 @@
+## Planned
+### Add
+ - pip installation
+ - translations into other languages
+### Change
+ - complete verbs for xhosa translation
+ - consider restructuring the mechanism of translation after the first naive implementation
+
 ## [0.0.3] 2022-08-26
+### Added
+ - LICENSE, README.md for initial push to GitHub
 ### Changed
  - fudo.py translated:
    - left -> ekhohlo (kl)
