@@ -25,19 +25,17 @@
 
 
 """
-Imizobo yoFudo yindlela edumileyo yokwazisa inkqubo kwi
-abantwana. Yayiyinxalenye yolwimi lokuqala lweLogo oluphuhlisiwe
-nguWally Feurzig kunye noSeymour Papert ngo-1966.
+ukuDweba ngoFudu kuyindlela edumile yokwethula uhlelo ku
+izingane. Bekuyingxenye yolimi lokuqala lokuhlela lwe-Logo olwakhiwe
+nguWally Feurzig kanye noSeymour Papert ngo-1966.
 
-Yiba nomfanekiso wofudo lwerobhothi oluqala ku- (0, 0) kwinqwelo-moya ye-x. Emva kwe ``import ufudo``, lunike
-umyalelo turtle.phambili(15), kwaye iyashukuma (on-screen!) 15 pixels in
-icala elijonge ngakulo, lizoba umgca njengoko lihamba. Yinike i
-umyalelo turtle.ekunene(25), kwaye ijikeleza-endaweni 25 degrees ngokwewotshi.
+Cabanga ngofudu lwerobhothi oluqala ku-(0, 0) endizeni ye-x-y. Ngemva kokuthi ``import fudu``, yinikeze umyalo othi fudu.phambili(15), futhi ihamba (esikrinini!) 15 pixels in
+lapho ibheke khona, idweba umugqa lapho ihamba. Inikeze umyalo othi fudu.right(25), futhi izungeza endaweni 25 degrees ngokwewashi.
 
-Ngokudibanisa le miyalelo kunye nezinye ezifanayo, iimilo ezintsonkothileyo kunye
-imifanekiso inokuzotywa ngokulula.
+Ngokuhlanganisa ndawonye le miyalo neminye efanayo, izimo eziyinkimbinkimbi kanye
+izithombe zingadwetshwa kalula.
 
------ fudo.py
+----- fudu.py
 
 This module is a translated version of the extended reimplementation of turtle.py from the
 Python standard distribution up to Python 2.5. (See: https://www.python.org)
@@ -102,7 +100,7 @@ extensions in mind. These will be commented and documented elsewhere.
 
 """
 
-_ver = "fudo(turtle) 0.0.3 - yePython 3 - 2022"
+_ver = "fudu(turtle) 0.0.3 - yePython 3 - 2022"
 
 print(_ver)
 
