@@ -125,7 +125,7 @@ _tg_screen_functions = ['addshape', 'bgcolor', 'bgpic', 'bye',
         'register_shape', 'resetscreen', 'screensize', 'setup',
         'setworldcoordinates', 'textinput', 'title', 'tracer', 'turtles', 'update',
         'window_height', 'window_width']
-_tg_turtle_functions = ['umva', 'begin_fill', 'begin_poly', 'uv',
+_tg_turtle_functions = ['emuva', 'begin_fill', 'begin_poly', 'mv',
         'circle', 'clear', 'clearstamp', 'clearstamps', 'clone', 'color',
         'degrees', 'distance', 'dot', 'down', 'end_fill', 'end_poly', 'pb',
         'fillcolor', 'filling', 'phambili', 'get_poly', 'getpen', 'getscreen', 'get_shapepoly',
@@ -143,7 +143,7 @@ _tg_utilities = ['write_docstringdict', 'done']
 __all__ = (_tg_classes + _tg_screen_functions + _tg_turtle_functions +
            _tg_utilities + ['Terminator']) # + _math_functions)
 
-_alias_list = ['addshape', 'uv', 'pb', 'ht', 'kl', 'pd', 'pos',
+_alias_list = ['addshape', 'mv', 'pb', 'ht', 'kl', 'pd', 'pos',
                'pu', 'kn', 'seth', 'setpos', 'setposition', 'st',
                'turtlesize', 'up', 'width']
 
@@ -1638,21 +1638,21 @@ class TNavigator(object):
         """
         self._go(distance)
 
-    def umva(self, distance):
-        """Shenxela ufudo umva umgama.
+    def emuva(self, distance):
+        """Hambisa ufudu emuva ngebanga.
 
-        Aliases: umva | uv
+        Iziteketiso: emuva | mv
 
-        Argument:
-        distance -- a number
+        Ukungqubuzana:
+        ibanga -- inombolo
 
-        Shenxisa ufudo ngasemva ngomgama, ngokuchaseneyo necala eliya ngakulo
-        ufudo lubhadlile. Musa ukutshintsha isihloko sofudo.
+        Hambisa ufudu uhlehle ngebanga, ngokuphambene nalapho uya khona
+        ufudu luyalibangisa. Ungasishintshi isihloko sofudu.
 
-        Example (for a Fudo instance named turtle):
+        Isibonelo (isibonelo soFudu oluqanjwe ngofudu):
         >>> turtle.position()
         (0.00, 0.00)
-        >>> turtle.umva(30)
+        >>> turtle.emuva(30)
         >>> turtle.position()
         (-30.00, 0.00)
         """
@@ -2009,7 +2009,7 @@ class TNavigator(object):
         """dummy method - to be overwritten by child class"""
 
     pb = phambili
-    uv = umva
+    mv = emuva
     kn = ekunene
     kl = ekhohlo
     position = pos
@@ -4003,7 +4003,7 @@ if __name__ == "__main__":
         reset()
         tracer(True)
         up()
-        umva(100)
+        emuva(100)
         down()
         # draw 3 squares; the last filled
         width(3)
