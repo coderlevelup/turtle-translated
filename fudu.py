@@ -54,7 +54,7 @@ Roughly it has the following features added:
 
 - Different turtle shapes, gif-images as turtle shapes, user defined
   and user controllable turtle shapes, among them compound
-  (multicolored) shapes. Fudo shapes can be stretched and tilted, which
+  (multicolored) shapes. Fudu shapes can be stretched and tilted, which
   makes turtles very versatile geometrical objects.
 
 - Fine control over turtle movement and screen updates via delay(),
@@ -66,7 +66,7 @@ Roughly it has the following features added:
   when kids try to program fancy pictures on their first encounter with
   turtle graphics.
 
-- Fudos now have an undo()-method with configurable undo-buffer.
+- Fudus now have an undo()-method with configurable undo-buffer.
 
 - Some simple commands/methods for creating event driven programs
   (mouse-, key-, timer-events). Especially useful for programming games.
@@ -74,18 +74,18 @@ Roughly it has the following features added:
 - A scrollable Canvas class. The default scrollable Canvas can be
   extended interactively as needed while playing around with the turtle(s).
 
-- A FudoScreen class with methods controlling background color or
+- A FuduScreen class with methods controlling background color or
   background image, window and canvas size and other properties of the
-  FudoScreen.
+  FuduScreen.
 
 - There is a method, setworldcoordinates(), to install a user defined
-  coordinate-system for the FudoScreen.
+  coordinate-system for the FuduScreen.
 
 - The implementation uses a 2-vector class named Vec2D, derived from tuple.
   This class is public, so it can be imported by the application programmer,
   which makes certain types of computations very natural and compact.
 
-- Appearance of the FudoScreen and the Fudos at startup/import can be
+- Appearance of the FuduScreen and the Fudus at startup/import can be
   configured by means of a turtle.cfg configuration file.
   The default configuration mimics the appearance of the old turtle module.
 
@@ -116,8 +116,8 @@ from os.path import isfile, split, join
 from copy import deepcopy
 from tkinter import simpledialog
 
-_tg_classes = ['ScrolledCanvas', 'FudoScreen', 'Screen',
-               'RawFudo', 'Fudo', 'RawPen', 'Pen', 'Shape', 'Vec2D']
+_tg_classes = ['ScrolledCanvas', 'FuduScreen', 'Screen',
+               'RawFudu', 'Fudu', 'RawPen', 'Pen', 'Shape', 'Vec2D']
 _tg_screen_functions = ['addshape', 'bgcolor', 'bgpic', 'bye',
         'clearscreen', 'colormode', 'delay', 'exitonclick', 'getcanvas',
         'getshapes', 'listen', 'mainloop', 'mode', 'numinput',
@@ -153,10 +153,10 @@ _CFG = {"width" : 0.5,               # Screen
         "canvheight": 300,
         "leftright": None,
         "topbottom": None,
-        "mode": "standard",          # FudoScreen
+        "mode": "standard",          # FuduScreen
         "colormode": 1.0,
         "delay": 10,
-        "undobuffersize": 1000,      # RawFudo
+        "undobuffersize": 1000,      # RawFudu
         "shape": "classic",
         "pencolor" : "black",
         "fillcolor" : "black",
@@ -165,7 +165,7 @@ _CFG = {"width" : 0.5,               # Screen
         "language": "english",        # docstrings
         "exampleturtle": "turtle",
         "examplescreen": "screen",
-        "title": "Python Fudo Graphics",
+        "title": "Python Fudu Graphics",
         "using_IDLE": False
        }
 
@@ -332,7 +332,7 @@ class ScrolledCanvas(TK.Frame):
     """Modeled after the scrolled canvas class from Grayons's Tkinter book.
 
     Used as the default canvas, which pops up automatically when
-    using turtle graphics functions or the Fudo class.
+    using turtle graphics functions or the Fudu class.
     """
     def __init__(self, master, width=500, height=350,
                                           canvwidth=600, canvheight=500):
@@ -457,12 +457,12 @@ class _Root(TK.Tk):
 Canvas = TK.Canvas
 
 
-class FudoScreenBase(object):
+class FuduScreenBase(object):
     """Provide the basic graphics functionality.
        Interface between Tkinter and turtle.py.
 
        To port turtle.py to some different graphics toolkit
-       a corresponding FudoScreenBase class has to be implemented.
+       a corresponding FuduScreenBase class has to be implemented.
     """
 
     def _blankimage(self):
@@ -806,7 +806,7 @@ class FudoScreenBase(object):
         Must NOT be used if a script is run from within IDLE in -n mode
         (No subprocess) - for interactive use of turtle graphics.
 
-        Example (for a FudoScreen instance named screen):
+        Example (for a FuduScreen instance named screen):
         >>> screen.mainloop()
 
         """
@@ -821,7 +821,7 @@ class FudoScreenBase(object):
         Return the string input
         If the dialog is canceled, return None.
 
-        Example (for a FudoScreen instance named screen):
+        Example (for a FuduScreen instance named screen):
         >>> screen.textinput("NIM", "Name of first player:")
 
         """
@@ -841,7 +841,7 @@ class FudoScreenBase(object):
         correction. Return the number input.
         If the dialog is canceled,  return None.
 
-        Example (for a FudoScreen instance named screen):
+        Example (for a FuduScreen instance named screen):
         >>> screen.numinput("Poker", "Your stakes:", 1000, minval=10, maxval=10000)
 
         """
@@ -856,7 +856,7 @@ class FudoScreenBase(object):
 
 
 class Terminator (Exception):
-    """Will be raised in FudoScreen.update, if _RUNNING becomes False.
+    """Will be raised in FuduScreen.update, if _RUNNING becomes False.
 
     This stops execution of a turtle graphics script.
     Main purpose: use in the Demo-Viewer turtle.Demo.py.
@@ -864,8 +864,8 @@ class Terminator (Exception):
     pass
 
 
-class FudoGraphicsError(Exception):
-    """Some FudoGraphics Error
+class FuduGraphicsError(Exception):
+    """Some FuduGraphics Error
     """
 
 
@@ -884,12 +884,12 @@ class Shape(object):
         elif type_ == "image":
             if isinstance(data, str):
                 if data.lower().endswith(".gif") and isfile(data):
-                    data = FudoScreen._image(data)
+                    data = FuduScreen._image(data)
                 # else data assumed to be Photoimage
         elif type_ == "compound":
             data = []
         else:
-            raise FudoGraphicsError("There is no shape type %s" % type_)
+            raise FuduGraphicsError("There is no shape type %s" % type_)
         self._data = data
 
     def addcomponent(self, poly, fill, outline=None):
@@ -909,7 +909,7 @@ class Shape(object):
         >>> # .. add more components and then use register_shape()
         """
         if self._type != "compound":
-            raise FudoGraphicsError("Cannot add component to %s Shape"
+            raise FuduGraphicsError("Cannot add component to %s Shape"
                                                                 % self._type)
         if outline is None:
             outline = fill
@@ -917,7 +917,7 @@ class Shape(object):
 
 
 class Tbuffer(object):
-    """Ring buffer used as undobuffer for RawFudo objects."""
+    """Ring buffer used as undobuffer for RawFudu objects."""
     def __init__(self, bufsize=10):
         self.bufsize = bufsize
         self.buffer = [[None]] * bufsize
@@ -954,10 +954,10 @@ class Tbuffer(object):
 
 
 
-class FudoScreen(FudoScreenBase):
+class FuduScreen(FuduScreenBase):
     """Provides screen oriented methods like setbg etc.
 
-    Only relies upon the methods of FudoScreenBase and NOT
+    Only relies upon the methods of FuduScreenBase and NOT
     upon components of the underlying graphics toolkit -
     which is Tkinter in this case.
     """
@@ -965,7 +965,7 @@ class FudoScreen(FudoScreenBase):
 
     def __init__(self, cv, mode=_CFG["mode"],
                  colormode=_CFG["colormode"], delay=_CFG["delay"]):
-        FudoScreenBase.__init__(self, cv)
+        FuduScreenBase.__init__(self, cv)
 
         self._shapes = {
                    "arrow" : Shape("polygon", ((-10,0), (10,0), (0,10))),
@@ -996,22 +996,22 @@ class FudoScreen(FudoScreenBase):
         self._keys = []
         self.clear()
         if sys.platform == 'darwin':
-            # Force Fudo window to the front on OS X. This is needed because
-            # the Fudo window will show behind the Terminal window when you
+            # Force Fudu window to the front on OS X. This is needed because
+            # the Fudu window will show behind the Terminal window when you
             # start the demo from the command line.
             rootwindow = cv.winfo_toplevel()
             rootwindow.call('wm', 'attributes', '.', '-topmost', '1')
             rootwindow.call('wm', 'attributes', '.', '-topmost', '0')
 
     def clear(self):
-        """Delete all drawings and all turtles from the FudoScreen.
+        """Delete all drawings and all turtles from the FuduScreen.
 
         No argument.
 
-        Reset empty FudoScreen to its initial state: white background,
+        Reset empty FuduScreen to its initial state: white background,
         no backgroundimage, no eventbindings and tracing on.
 
-        Example (for a FudoScreen instance named screen):
+        Example (for a FuduScreen instance named screen):
         >>> screen.clear()
 
         Note: this method is not available as function.
@@ -1031,7 +1031,7 @@ class FudoScreen(FudoScreenBase):
         for key in self._keys[:]:
             self.onkey(None, key)
             self.onkeypress(None, key)
-        Fudo._pen = None
+        Fudu._pen = None
 
     def mode(self, mode=None):
         """Set turtle-mode ('standard', 'logo' or 'world') and perform reset.
@@ -1040,7 +1040,7 @@ class FudoScreen(FudoScreenBase):
         mode -- one of the strings 'standard', 'logo' or 'world'
 
         Mode 'standard' is compatible with turtle.py.
-        Mode 'logo' is compatible with most Logo-Fudo-Graphics.
+        Mode 'logo' is compatible with most Logo-Fudu-Graphics.
         Mode 'world' uses userdefined 'worldcoordinates'. *Attention*: in
         this mode angles appear distorted if x/y unit-ratio doesn't equal 1.
         If mode is not given, return the current mode.
@@ -1059,7 +1059,7 @@ class FudoScreen(FudoScreenBase):
             return self._mode
         mode = mode.lower()
         if mode not in ["standard", "logo", "world"]:
-            raise FudoGraphicsError("No turtle-graphics-mode %s" % mode)
+            raise FuduGraphicsError("No turtle-graphics-mode %s" % mode)
         self._mode = mode
         if mode in ["standard", "logo"]:
             self._setscrollregion(-self.canvwidth//2, -self.canvheight//2,
@@ -1083,7 +1083,7 @@ class FudoScreen(FudoScreenBase):
         But ATTENTION: in user-defined coordinatesystems angles may appear
         distorted. (see Screen.mode())
 
-        Example (for a FudoScreen instance named screen):
+        Example (for a FuduScreen instance named screen):
         >>> screen.setworldcoordinates(-10,-0.5,50,1.5)
         >>> for _ in range(36):
         ...     left(10)
@@ -1107,7 +1107,7 @@ class FudoScreen(FudoScreenBase):
         self.update()
 
     def register_shape(self, name, shape=None):
-        """Adds a turtle shape to FudoScreen's shapelist.
+        """Adds a turtle shape to FuduScreen's shapelist.
 
         Arguments:
         (1) name is the name of a gif-file and shape is None.
@@ -1125,7 +1125,7 @@ class FudoScreen(FudoScreenBase):
         call: register_shape("turtle.gif")
         --or: register_shape("tri", ((0,0), (10,10), (-10,10)))
 
-        Example (for a FudoScreen instance named screen):
+        Example (for a FuduScreen instance named screen):
         >>> screen.register_shape("triangle", ((5,-3),(0,5),(-5,-3)))
 
         """
@@ -1134,7 +1134,7 @@ class FudoScreen(FudoScreenBase):
             if name.lower().endswith(".gif"):
                 shape = Shape("image", self._image(name))
             else:
-                raise FudoGraphicsError("Bad arguments for register_shape.\n"
+                raise FuduGraphicsError("Bad arguments for register_shape.\n"
                                           + "Use  help(register_shape)" )
         elif isinstance(shape, tuple):
             shape = Shape("polygon", shape)
@@ -1157,15 +1157,15 @@ class FudoScreen(FudoScreenBase):
             if self._iscolorstring(color) or color == "":
                 return color
             else:
-                raise FudoGraphicsError("bad color string: %s" % str(color))
+                raise FuduGraphicsError("bad color string: %s" % str(color))
         try:
             r, g, b = color
         except (TypeError, ValueError):
-            raise FudoGraphicsError("bad color arguments: %s" % str(color))
+            raise FuduGraphicsError("bad color arguments: %s" % str(color))
         if self._colormode == 1.0:
             r, g, b = [round(255.0*x) for x in (r, g, b)]
         if not ((0 <= r <= 255) and (0 <= g <= 255) and (0 <= b <= 255)):
-            raise FudoGraphicsError("bad color sequence: %s" % str(color))
+            raise FuduGraphicsError("bad color sequence: %s" % str(color))
         return "#%02x%02x%02x" % (r, g, b)
 
     def _color(self, cstr):
@@ -1176,7 +1176,7 @@ class FudoScreen(FudoScreenBase):
         elif len(cstr) == 4:
             cl = [16*int(cstr[h], 16) for h in cstr[1:]]
         else:
-            raise FudoGraphicsError("bad colorstring: %s" % cstr)
+            raise FuduGraphicsError("bad colorstring: %s" % cstr)
         return tuple(c * self._colormode/255 for c in cl)
 
     def colormode(self, cmode=None):
@@ -1187,7 +1187,7 @@ class FudoScreen(FudoScreenBase):
 
         r, g, b values of colortriples have to be in range 0..cmode.
 
-        Example (for a FudoScreen instance named screen):
+        Example (for a FuduScreen instance named screen):
         >>> screen.colormode()
         1.0
         >>> screen.colormode(255)
@@ -1201,11 +1201,11 @@ class FudoScreen(FudoScreenBase):
             self._colormode = int(cmode)
 
     def reset(self):
-        """Reset all Fudos on the Screen to their initial state.
+        """Reset all Fudus on the Screen to their initial state.
 
         No argument.
 
-        Example (for a FudoScreen instance named screen):
+        Example (for a FuduScreen instance named screen):
         >>> screen.reset()
         """
         for turtle in self._turtles:
@@ -1215,19 +1215,19 @@ class FudoScreen(FudoScreenBase):
     def turtles(self):
         """Return the list of turtles on the screen.
 
-        Example (for a FudoScreen instance named screen):
+        Example (for a FuduScreen instance named screen):
         >>> screen.turtles()
-        [<turtle.Fudo object at 0x00E11FB0>]
+        [<turtle.Fudu object at 0x00E11FB0>]
         """
         return self._turtles
 
     def bgcolor(self, *args):
-        """Set or return backgroundcolor of the FudoScreen.
+        """Set or return backgroundcolor of the FuduScreen.
 
         Arguments (if given): a color string or three numbers
         in the range 0..colormode or a 3-tuple of such numbers.
 
-        Example (for a FudoScreen instance named screen):
+        Example (for a FuduScreen instance named screen):
         >>> screen.bgcolor("orange")
         >>> screen.bgcolor()
         'orange'
@@ -1253,9 +1253,9 @@ class FudoScreen(FudoScreenBase):
 
         If n is given, only each n-th regular screen update is really performed.
         (Can be used to accelerate the drawing of complex graphics.)
-        Second arguments sets delay value (see RawFudo.delay())
+        Second arguments sets delay value (see RawFudu.delay())
 
-        Example (for a FudoScreen instance named screen):
+        Example (for a FuduScreen instance named screen):
         >>> screen.tracer(8, 25)
         >>> dist = 2
         >>> for i in range(200):
@@ -1278,7 +1278,7 @@ class FudoScreen(FudoScreenBase):
         Optional argument:
         delay -- positive integer
 
-        Example (for a FudoScreen instance named screen):
+        Example (for a FuduScreen instance named screen):
         >>> screen.delay(15)
         >>> screen.delay()
         15
@@ -1289,15 +1289,15 @@ class FudoScreen(FudoScreenBase):
 
     def _incrementudc(self):
         """Increment update counter."""
-        if not FudoScreen._RUNNING:
-            FudoScreen._RUNNING = True
+        if not FuduScreen._RUNNING:
+            FuduScreen._RUNNING = True
             raise Terminator
         if self._tracing > 0:
             self._updatecounter += 1
             self._updatecounter %= self._tracing
 
     def update(self):
-        """Perform a FudoScreen update.
+        """Perform a FuduScreen update.
         """
         tracing = self._tracing
         self._tracing = True
@@ -1310,7 +1310,7 @@ class FudoScreen(FudoScreenBase):
     def window_width(self):
         """ Return the width of the turtle window.
 
-        Example (for a FudoScreen instance named screen):
+        Example (for a FuduScreen instance named screen):
         >>> screen.window_width()
         640
         """
@@ -1319,14 +1319,14 @@ class FudoScreen(FudoScreenBase):
     def window_height(self):
         """ Return the height of the turtle window.
 
-        Example (for a FudoScreen instance named screen):
+        Example (for a FuduScreen instance named screen):
         >>> screen.window_height()
         480
         """
         return self._window_size()[1]
 
     def getcanvas(self):
-        """Return the Canvas of this FudoScreen.
+        """Return the Canvas of this FuduScreen.
 
         No argument.
 
@@ -1342,7 +1342,7 @@ class FudoScreen(FudoScreenBase):
 
         No argument.
 
-        Example (for a FudoScreen instance named screen):
+        Example (for a FuduScreen instance named screen):
         >>> screen.getshapes()
         ['arrow', 'blank', 'circle', ... , 'turtle']
         """
@@ -1356,10 +1356,10 @@ class FudoScreen(FudoScreenBase):
                clicked point on the canvas.
         btn -- the number of the mouse-button, defaults to 1
 
-        Example (for a FudoScreen instance named screen)
+        Example (for a FuduScreen instance named screen)
 
         >>> screen.onclick(goto)
-        >>> # Subsequently clicking into the FudoScreen will
+        >>> # Subsequently clicking into the FuduScreen will
         >>> # make the turtle move to the clicked point.
         >>> screen.onclick(None)
         """
@@ -1372,10 +1372,10 @@ class FudoScreen(FudoScreenBase):
         fun -- a function with no arguments
         key -- a string: key (e.g. "a") or key-symbol (e.g. "space")
 
-        In order to be able to register key-events, FudoScreen
+        In order to be able to register key-events, FuduScreen
         must have focus. (See method listen.)
 
-        Example (for a FudoScreen instance named screen):
+        Example (for a FuduScreen instance named screen):
 
         >>> def f():
         ...     pb(50)
@@ -1403,11 +1403,11 @@ class FudoScreen(FudoScreenBase):
         fun -- a function with no arguments
         key -- a string: key (e.g. "a") or key-symbol (e.g. "space")
 
-        In order to be able to register key-events, FudoScreen
+        In order to be able to register key-events, FuduScreen
         must have focus. (See method listen.)
 
-        Example (for a FudoScreen instance named screen
-        and a Fudo instance named turtle):
+        Example (for a FuduScreen instance named screen
+        and a Fudu instance named turtle):
 
         >>> def f():
         ...     pb(50)
@@ -1428,13 +1428,13 @@ class FudoScreen(FudoScreenBase):
         self._onkeypress(fun, key)
 
     def listen(self, xdummy=None, ydummy=None):
-        """Set focus on FudoScreen (in order to collect key-events)
+        """Set focus on FuduScreen (in order to collect key-events)
 
         No arguments.
         Dummy arguments are provided in order
         to be able to pass listen to the onclick method.
 
-        Example (for a FudoScreen instance named screen):
+        Example (for a FuduScreen instance named screen):
         >>> screen.listen()
         """
         self._listen()
@@ -1446,7 +1446,7 @@ class FudoScreen(FudoScreenBase):
         fun -- a function with no arguments.
         t -- a number >= 0
 
-        Example (for a FudoScreen instance named screen):
+        Example (for a FuduScreen instance named screen):
 
         >>> running = True
         >>> def f():
@@ -1470,7 +1470,7 @@ class FudoScreen(FudoScreenBase):
         If picname is "nopic", delete backgroundimage, if present.
         If picname is None, return the filename of the current backgroundimage.
 
-        Example (for a FudoScreen instance named screen):
+        Example (for a FuduScreen instance named screen):
         >>> screen.bgpic()
         'nopic'
         >>> screen.bgpic("landscape.gif")
@@ -1497,7 +1497,7 @@ class FudoScreen(FudoScreenBase):
         the canvas use the scrollbars. (Can make visible those parts
         of a drawing, which were outside the canvas before!)
 
-        Example (for a Fudo instance named turtle):
+        Example (for a Fudu instance named turtle):
         >>> turtle.screensize(2000,1500)
         >>> # e.g. to search for an erroneously escaped turtle ;-)
         """
@@ -1510,7 +1510,7 @@ class FudoScreen(FudoScreenBase):
     onkeyrelease = onkey
 
 class TNavigator(object):
-    """Navigation part of the RawFudo.
+    """Navigation part of the RawFudu.
     Implements methods for turtle movement.
     """
     START_ORIENTATION = {
@@ -1573,7 +1573,7 @@ class TNavigator(object):
         of 'degrees' for a full circle. Default value is
         360 degrees.
 
-        Example (for a Fudo instance named turtle):
+        Example (for a Fudu instance named turtle):
         >>> turtle.sokunxele(90)
         >>> turtle.heading()
         90
@@ -1592,7 +1592,7 @@ class TNavigator(object):
 
         No arguments.
 
-        Example (for a Fudo instance named turtle):
+        Example (for a Fudu instance named turtle):
         >>> turtle.heading()
         90
         >>> turtle.radians()
@@ -1707,7 +1707,7 @@ class TNavigator(object):
 
         No arguments.
 
-        Example (for a Fudo instance named turtle):
+        Example (for a Fudu instance named turtle):
         >>> turtle.pos()
         (0.00, 240.00)
         """
@@ -1718,7 +1718,7 @@ class TNavigator(object):
 
         No arguments.
 
-        Example (for a Fudo instance named turtle):
+        Example (for a Fudu instance named turtle):
         >>> reset()
         >>> turtle.sokunxele(60)
         >>> turtle.forward(100)
@@ -1732,7 +1732,7 @@ class TNavigator(object):
         ---
         No arguments.
 
-        Example (for a Fudo instance named turtle):
+        Example (for a Fudu instance named turtle):
         >>> reset()
         >>> turtle.sokunxele(60)
         >>> turtle.forward(100)
@@ -1758,7 +1758,7 @@ class TNavigator(object):
         Move turtle to an absolute position. If the pen is down,
         a line will be drawn. The turtle's orientation does not change.
 
-        Example (for a Fudo instance named turtle):
+        Example (for a Fudu instance named turtle):
         >>> tp = turtle.pos()
         >>> tp
         (0.00, 0.00)
@@ -1785,7 +1785,7 @@ class TNavigator(object):
         Move turtle to the origin - coordinates (0,0) and set its
         heading to its start-orientation (which depends on mode).
 
-        Example (for a Fudo instance named turtle):
+        Example (for a Fudu instance named turtle):
         >>> turtle.home()
         """
         self.goto(0, 0)
@@ -1800,7 +1800,7 @@ class TNavigator(object):
         Set the turtle's first coordinate to x, leave second coordinate
         unchanged.
 
-        Example (for a Fudo instance named turtle):
+        Example (for a Fudu instance named turtle):
         >>> turtle.position()
         (0.00, 240.00)
         >>> turtle.setx(10)
@@ -1818,7 +1818,7 @@ class TNavigator(object):
         Set the turtle's first coordinate to x, second coordinate remains
         unchanged.
 
-        Example (for a Fudo instance named turtle):
+        Example (for a Fudu instance named turtle):
         >>> turtle.position()
         (0.00, 40.00)
         >>> turtle.sety(-10)
@@ -1839,12 +1839,12 @@ class TNavigator(object):
         --or: distance(vec)          # e.g. as returned by pos()
         --or: distance(mypen)        # where mypen is another turtle
 
-        Example (for a Fudo instance named turtle):
+        Example (for a Fudu instance named turtle):
         >>> turtle.pos()
         (0.00, 0.00)
         >>> turtle.distance(30,40)
         50.0
-        >>> pen = Fudo()
+        >>> pen = Fudu()
         >>> pen.forward(77)
         >>> turtle.distance(pen)
         77.0
@@ -1875,7 +1875,7 @@ class TNavigator(object):
         specified by x, y and the turtle's start orientation. (Depends on
         modes - "standard" or "logo")
 
-        Example (for a Fudo instance named turtle):
+        Example (for a Fudu instance named turtle):
         >>> turtle.pos()
         (10.00, 10.00)
         >>> turtle.towards(0,0)
@@ -1899,7 +1899,7 @@ class TNavigator(object):
 
         No arguments.
 
-        Example (for a Fudo instance named turtle):
+        Example (for a Fudu instance named turtle):
         >>> turtle.sokunxele(67)
         >>> turtle.heading()
         67.0
@@ -1927,7 +1927,7 @@ class TNavigator(object):
          180 - west              180 - south
          270 - south             270 - west
 
-        Example (for a Fudo instance named turtle):
+        Example (for a Fudu instance named turtle):
         >>> turtle.setheading(90)
         >>> turtle.heading()
         90
@@ -1963,7 +1963,7 @@ class TNavigator(object):
         --or: circle(radius, extent, steps)
         --or: circle(radius, steps=6)         # 6-sided polygon
 
-        Example (for a Fudo instance named turtle):
+        Example (for a Fudu instance named turtle):
         >>> turtle.circle(50)
         >>> turtle.circle(120, 180)  # semicircle
         """
@@ -2020,7 +2020,7 @@ class TNavigator(object):
 
 
 class TPen(object):
-    """Drawing part of the RawFudo.
+    """Drawing part of the RawFudu.
     Implements drawing properties.
     """
     def __init__(self, resizemode=_CFG["resizemode"]):
@@ -2059,7 +2059,7 @@ class TPen(object):
         resizemode("user") is called by a call of shapesize with arguments.
 
 
-        Examples (for a Fudo instance named turtle):
+        Examples (for a Fudu instance named turtle):
         >>> turtle.resizemode("noresize")
         >>> turtle.resizemode()
         'noresize'
@@ -2083,7 +2083,7 @@ class TPen(object):
         the same line thickness. If no argument is given, current pensize
         is returned.
 
-        Example (for a Fudo instance named turtle):
+        Example (for a Fudu instance named turtle):
         >>> turtle.pensize()
         1
         >>> turtle.pensize(10)   # from here on lines of width 10 are drawn
@@ -2100,7 +2100,7 @@ class TPen(object):
 
         No argument
 
-        Example (for a Fudo instance named turtle):
+        Example (for a Fudu instance named turtle):
         >>> turtle.penup()
         """
         if not self._drawing:
@@ -2114,7 +2114,7 @@ class TPen(object):
 
         No argument.
 
-        Example (for a Fudo instance named turtle):
+        Example (for a Fudu instance named turtle):
         >>> turtle.pendown()
         """
         if self._drawing:
@@ -2126,7 +2126,7 @@ class TPen(object):
 
         No argument.
 
-        Example (for a Fudo instance named turtle):
+        Example (for a Fudu instance named turtle):
         >>> turtle.penup()
         >>> turtle.isdown()
         False
@@ -2160,7 +2160,7 @@ class TPen(object):
         speed = 0 : *no* animation takes place. forward/back makes turtle jump
         and likewise sokunxele/sokudla make the turtle turn instantly.
 
-        Example (for a Fudo instance named turtle):
+        Example (for a Fudu instance named turtle):
         >>> turtle.speed(3)
         """
         speeds = {'fastest':0, 'fast':10, 'normal':6, 'slow':3, 'slowest':1 }
@@ -2197,7 +2197,7 @@ class TPen(object):
         is drawn with the newly set colors.
         For more info see: pencolor, fillcolor
 
-        Example (for a Fudo instance named turtle):
+        Example (for a Fudu instance named turtle):
         >>> turtle.color('red', 'green')
         >>> turtle.color()
         ('red', 'green')
@@ -2242,7 +2242,7 @@ class TPen(object):
         If turtleshape is a polygon, the outline of that polygon is drawn
         with the newly set pencolor.
 
-        Example (for a Fudo instance named turtle):
+        Example (for a Fudu instance named turtle):
         >>> turtle.pencolor('brown')
         >>> tup = (0.2, 0.8, 0.55)
         >>> turtle.pencolor(tup)
@@ -2279,7 +2279,7 @@ class TPen(object):
         If turtleshape is a polygon, the interior of that polygon is drawn
         with the newly set fillcolor.
 
-        Example (for a Fudo instance named turtle):
+        Example (for a Fudu instance named turtle):
         >>> turtle.fillcolor('violet')
         >>> col = turtle.pencolor()
         >>> turtle.fillcolor(col)
@@ -2300,7 +2300,7 @@ class TPen(object):
 
         No argument.
 
-        Example (for a Fudo instance named turtle):
+        Example (for a Fudu instance named turtle):
         >>> turtle.hideturtle()
         >>> turtle.showturtle()
         """
@@ -2317,17 +2317,17 @@ class TPen(object):
         middle of a complicated drawing, because hiding
         the turtle speeds up the drawing observably.
 
-        Example (for a Fudo instance named turtle):
+        Example (for a Fudu instance named turtle):
         >>> turtle.hideturtle()
         """
         self.pen(shown=False)
 
     def isvisible(self):
-        """Return True if the Fudo is shown, False if it's hidden.
+        """Return True if the Fudu is shown, False if it's hidden.
 
         No argument.
 
-        Example (for a Fudo instance named turtle):
+        Example (for a Fudu instance named turtle):
         >>> turtle.hideturtle()
         >>> print turtle.isvisible():
         False
@@ -2362,7 +2362,7 @@ class TPen(object):
         This can be used to set several pen attributes in one statement.
 
 
-        Examples (for a Fudo instance named turtle):
+        Examples (for a Fudu instance named turtle):
         >>> turtle.pen(fillcolor="black", pencolor="red", pensize=10)
         >>> turtle.pen()
         {'pensize': 10, 'shown': True, 'resizemode': 'auto', 'outline': 1,
@@ -2479,8 +2479,8 @@ class TPen(object):
     ht = hideturtle
 
 
-class _FudoImage(object):
-    """Helper class: Datatype to store Fudo attributes
+class _FuduImage(object):
+    """Helper class: Datatype to store Fudu attributes
     """
 
     def __init__(self, screen, shapeIndex):
@@ -2510,9 +2510,9 @@ class _FudoImage(object):
                                           screen._shapes[shapeIndex]._data]
 
 
-class RawFudo(TPen, TNavigator):
-    """Animation part of the RawFudo.
-    Puts RawFudo upon a FudoScreen and provides tools for
+class RawFudu(TPen, TNavigator):
+    """Animation part of the RawFudu.
+    Puts RawFudu upon a FuduScreen and provides tools for
     its animation.
     """
     screens = []
@@ -2523,27 +2523,27 @@ class RawFudo(TPen, TNavigator):
                  visible=_CFG["visible"]):
         if isinstance(canvas, _Screen):
             self.screen = canvas
-        elif isinstance(canvas, FudoScreen):
-            if canvas not in RawFudo.screens:
-                RawFudo.screens.append(canvas)
+        elif isinstance(canvas, FuduScreen):
+            if canvas not in RawFudu.screens:
+                RawFudu.screens.append(canvas)
             self.screen = canvas
         elif isinstance(canvas, (ScrolledCanvas, Canvas)):
-            for screen in RawFudo.screens:
+            for screen in RawFudu.screens:
                 if screen.cv == canvas:
                     self.screen = screen
                     break
             else:
-                self.screen = FudoScreen(canvas)
-                RawFudo.screens.append(self.screen)
+                self.screen = FuduScreen(canvas)
+                RawFudu.screens.append(self.screen)
         else:
-            raise FudoGraphicsError("bad canvas argument %s" % canvas)
+            raise FuduGraphicsError("bad canvas argument %s" % canvas)
 
         screen = self.screen
         TNavigator.__init__(self, screen.mode())
         TPen.__init__(self)
         screen._turtles.append(self)
         self.drawingLineItem = screen._createline()
-        self.turtle = _FudoImage(screen, shape)
+        self.turtle = _FuduImage(screen, shape)
         self._poly = None
         self._creatingPoly = False
         self._fillitem = self._fillpath = None
@@ -2565,7 +2565,7 @@ class RawFudo(TPen, TNavigator):
         Delete the turtle's drawings from the screen, re-center the turtle
         and set variables to the default values.
 
-        Example (for a Fudo instance named turtle):
+        Example (for a Fudu instance named turtle):
         >>> turtle.position()
         (0.00,-22.00)
         >>> turtle.heading()
@@ -2593,7 +2593,7 @@ class RawFudo(TPen, TNavigator):
         by the undo() function.
         If size is None, no undobuffer is present.
 
-        Example (for a Fudo instance named turtle):
+        Example (for a Fudu instance named turtle):
         >>> turtle.setundobuffer(42)
         """
         if size is None or size <= 0:
@@ -2606,7 +2606,7 @@ class RawFudo(TPen, TNavigator):
 
         No argument.
 
-        Example (for a Fudo instance named turtle):
+        Example (for a Fudu instance named turtle):
         >>> while undobufferentries():
         ...     undo()
         """
@@ -2637,7 +2637,7 @@ class RawFudo(TPen, TNavigator):
         State and position of the turtle as well as drawings of other
         turtles are not affected.
 
-        Examples (for a Fudo instance named turtle):
+        Examples (for a Fudu instance named turtle):
         >>> turtle.clear()
         """
         self._clear()
@@ -2652,7 +2652,7 @@ class RawFudo(TPen, TNavigator):
                                   self._pencolor, self._pensize)
 
     def _update(self):
-        """Perform a Fudo-data update.
+        """Perform a Fudu-data update.
         """
         screen = self.screen
         if screen._tracing == 0:
@@ -2660,8 +2660,8 @@ class RawFudo(TPen, TNavigator):
         elif screen._tracing == 1:
             self._update_data()
             self._drawturtle()
-            screen._update()                  # FudoScreenBase
-            screen._delay(screen._delayvalue) # FudoScreenBase
+            screen._update()                  # FuduScreenBase
+            screen._delay(screen._delayvalue) # FuduScreenBase
         else:
             self._update_data()
             if screen._updatecounter == 0:
@@ -2678,9 +2678,9 @@ class RawFudo(TPen, TNavigator):
 
         If n is given, only each n-th regular screen update is really performed.
         (Can be used to accelerate the drawing of complex graphics.)
-        Second arguments sets delay value (see RawFudo.delay())
+        Second arguments sets delay value (see RawFudu.delay())
 
-        Example (for a Fudo instance named turtle):
+        Example (for a Fudu instance named turtle):
         >>> turtle.tracer(8, 25)
         >>> dist = 2
         >>> for i in range(200):
@@ -2704,11 +2704,11 @@ class RawFudo(TPen, TNavigator):
         try:
             r, g, b = args
         except (TypeError, ValueError):
-            raise FudoGraphicsError("bad color arguments: %s" % str(args))
+            raise FuduGraphicsError("bad color arguments: %s" % str(args))
         if self.screen._colormode == 1.0:
             r, g, b = [round(255.0*x) for x in (r, g, b)]
         if not ((0 <= r <= 255) and (0 <= g <= 255) and (0 <= b <= 255)):
-            raise FudoGraphicsError("bad color sequence: %s" % str(args))
+            raise FuduGraphicsError("bad color sequence: %s" % str(args))
         return "#%02x%02x%02x" % (r, g, b)
 
     def clone(self):
@@ -2719,8 +2719,8 @@ class RawFudo(TPen, TNavigator):
         Create and return a clone of the turtle with same position, heading
         and turtle properties.
 
-        Example (for a Fudo instance named mick):
-        mick = Fudo()
+        Example (for a Fudu instance named mick):
+        mick = Fudu()
         joe = mick.clone()
         """
         screen = self.screen
@@ -2736,7 +2736,7 @@ class RawFudo(TPen, TNavigator):
         self.turtle = turtle
 
         q.screen = screen
-        q.turtle = _FudoImage(screen, self.turtle.shapeIndex)
+        q.turtle = _FuduImage(screen, self.turtle.shapeIndex)
 
         screen._turtles.append(q)
         ttype = screen._shapes[self.turtle.shapeIndex]._type
@@ -2759,12 +2759,12 @@ class RawFudo(TPen, TNavigator):
 
         Set turtle shape to shape with given name or, if name is not given,
         return name of current shape.
-        Shape with name must exist in the FudoScreen's shape dictionary.
+        Shape with name must exist in the FuduScreen's shape dictionary.
         Initially there are the following polygon shapes:
         'arrow', 'turtle', 'circle', 'square', 'triangle', 'classic'.
         To learn about how to deal with shapes see Screen-method register_shape.
 
-        Example (for a Fudo instance named turtle):
+        Example (for a Fudu instance named turtle):
         >>> turtle.shape()
         'arrow'
         >>> turtle.shape("turtle")
@@ -2774,7 +2774,7 @@ class RawFudo(TPen, TNavigator):
         if name is None:
             return self.turtle.shapeIndex
         if not name in self.screen.getshapes():
-            raise FudoGraphicsError("There is no shape named %s" % name)
+            raise FuduGraphicsError("There is no shape named %s" % name)
         self.turtle._setshape(name)
         self._update()
 
@@ -2794,7 +2794,7 @@ class RawFudo(TPen, TNavigator):
         stretch_len is stretchfactor in direction of turtles orientation.
         outline determines the width of the shapes's outline.
 
-        Examples (for a Fudo instance named turtle):
+        Examples (for a Fudu instance named turtle):
         >>> turtle.resizemode("user")
         >>> turtle.shapesize(5, 5, 12)
         >>> turtle.shapesize(outline=8)
@@ -2803,7 +2803,7 @@ class RawFudo(TPen, TNavigator):
             stretch_wid, stretch_len = self._stretchfactor
             return stretch_wid, stretch_len, self._outlinewidth
         if stretch_wid == 0 or stretch_len == 0:
-            raise FudoGraphicsError("stretch_wid/stretch_len must not be zero")
+            raise FuduGraphicsError("stretch_wid/stretch_len must not be zero")
         if stretch_wid is not None:
             if stretch_len is None:
                 stretchfactor = stretch_wid, stretch_wid
@@ -2830,7 +2830,7 @@ class RawFudo(TPen, TNavigator):
         tangent of the shear angle, by which lines parallel to the
         heading of the turtle are sheared.
 
-        Examples (for a Fudo instance named turtle):
+        Examples (for a Fudu instance named turtle):
         >>> turtle.shape("circle")
         >>> turtle.shapesize(5,2)
         >>> turtle.shearfactor(0.5)
@@ -2852,7 +2852,7 @@ class RawFudo(TPen, TNavigator):
 
         Deprecated since Python 3.1
 
-        Examples (for a Fudo instance named turtle):
+        Examples (for a Fudu instance named turtle):
         >>> turtle.shape("circle")
         >>> turtle.shapesize(5,2)
         >>> turtle.settiltangle(45)
@@ -2862,7 +2862,7 @@ class RawFudo(TPen, TNavigator):
         >>> turtle.stamp()
         >>> turtle.pb(50)
         """
-        warnings._deprecated("turtle.RawFudo.settiltangle()",
+        warnings._deprecated("turtle.RawFudu.settiltangle()",
                              "{name!r} is deprecated since Python 3.1 and scheduled "
                              "for removal in Python {remove}. Use tiltangle() instead.",
                              remove=(3, 13))
@@ -2883,7 +2883,7 @@ class RawFudo(TPen, TNavigator):
         (Incorrectly marked as deprecated since Python 3.1, it is really
         settiltangle that is deprecated.)
 
-        Examples (for a Fudo instance named turtle):
+        Examples (for a Fudu instance named turtle):
         >>> turtle.shape("circle")
         >>> turtle.shapesize(5, 2)
         >>> turtle.tiltangle()
@@ -2916,7 +2916,7 @@ class RawFudo(TPen, TNavigator):
         Rotate the turtleshape by angle from its current tilt-angle,
         but do NOT change the turtle's heading (direction of movement).
 
-        Examples (for a Fudo instance named turtle):
+        Examples (for a Fudu instance named turtle):
         >>> turtle.shape("circle")
         >>> turtle.shapesize(5,2)
         >>> turtle.tilt(30)
@@ -2939,7 +2939,7 @@ class RawFudo(TPen, TNavigator):
         Modify stretchfactor, shearfactor and tiltangle according to the
         given matrix.
 
-        Examples (for a Fudo instance named turtle):
+        Examples (for a Fudu instance named turtle):
         >>> turtle.shape("square")
         >>> turtle.shapesize(4,2)
         >>> turtle.shearfactor(-0.5)
@@ -2954,7 +2954,7 @@ class RawFudo(TPen, TNavigator):
         if t21 is not None: m21 = t21
         if t22 is not None: m22 = t22
         if t11 * t22 - t12 * t21 == 0:
-            raise FudoGraphicsError("Bad shape transform matrix: must not be singular")
+            raise FuduGraphicsError("Bad shape transform matrix: must not be singular")
         self._shapetrafo = (m11, m12, m21, m22)
         alfa = math.atan2(-m21, m11) % math.tau
         sa, ca = math.sin(alfa), math.cos(alfa)
@@ -2983,7 +2983,7 @@ class RawFudo(TPen, TNavigator):
 
         No argument.
 
-        Examples (for a Fudo instance named turtle):
+        Examples (for a Fudu instance named turtle):
         >>> turtle.shape("square")
         >>> turtle.shapetransform(4, -1, 0, 2)
         >>> turtle.get_shapepoly()
@@ -3057,7 +3057,7 @@ class RawFudo(TPen, TNavigator):
         turtle position. Return a stamp_id for that stamp, which can be
         used to delete it by calling clearstamp(stamp_id).
 
-        Example (for a Fudo instance named turtle):
+        Example (for a Fudu instance named turtle):
         >>> turtle.color("blue")
         >>> turtle.stamp()
         13
@@ -3121,7 +3121,7 @@ class RawFudo(TPen, TNavigator):
         Argument:
         stampid - an integer, must be return value of previous stamp() call.
 
-        Example (for a Fudo instance named turtle):
+        Example (for a Fudu instance named turtle):
         >>> turtle.color("blue")
         >>> astamp = turtle.stamp()
         >>> turtle.pb(50)
@@ -3140,7 +3140,7 @@ class RawFudo(TPen, TNavigator):
         else if n > 0 delete first n stamps
         else if n < 0 delete last n stamps.
 
-        Example (for a Fudo instance named turtle):
+        Example (for a Fudu instance named turtle):
         >>> for i in range(8):
         ...     turtle.stamp(); turtle.pb(30)
         ...
@@ -3197,7 +3197,7 @@ class RawFudo(TPen, TNavigator):
             if self._drawing:
                 screen._drawline(self.drawingLineItem, ((0, 0), (0, 0)),
                                                fill="", width=self._pensize)
-        # Fudo now at end,
+        # Fudu now at end,
         if self._drawing: # now update currentLine
             self.currentLine.append(end)
         if isinstance(self._fillpath, list):
@@ -3256,7 +3256,7 @@ class RawFudo(TPen, TNavigator):
             if drawing:
                 screen._drawline(self.drawingLineItem, ((0, 0), (0, 0)),
                                                fill="", width=ps)
-        # Fudo now at position old,
+        # Fudu now at position old,
         self._position = old
         ##  if undo is done during creating a polygon, the last vertex
         ##  will be deleted. if the polygon is entirely deleted,
@@ -3315,7 +3315,7 @@ class RawFudo(TPen, TNavigator):
 
         No argument.
 
-        Example (for a Fudo instance named turtle):
+        Example (for a Fudu instance named turtle):
         >>> turtle.begin_fill()
         >>> if turtle.filling():
         ...     turtle.pensize(5)
@@ -3329,7 +3329,7 @@ class RawFudo(TPen, TNavigator):
 
         No argument.
 
-        Example (for a Fudo instance named turtle):
+        Example (for a Fudu instance named turtle):
         >>> turtle.color("black", "red")
         >>> turtle.begin_fill()
         >>> turtle.circle(60)
@@ -3350,7 +3350,7 @@ class RawFudo(TPen, TNavigator):
 
         No argument.
 
-        Example (for a Fudo instance named turtle):
+        Example (for a Fudu instance named turtle):
         >>> turtle.color("black", "red")
         >>> turtle.begin_fill()
         >>> turtle.circle(60)
@@ -3375,7 +3375,7 @@ class RawFudo(TPen, TNavigator):
         Draw a circular dot with diameter size, using color.
         If size is not given, the maximum of pensize+4 and 2*pensize is used.
 
-        Example (for a Fudo instance named turtle):
+        Example (for a Fudu instance named turtle):
         >>> turtle.dot()
         >>> turtle.pb(50); turtle.dot(20, "blue"); turtle.pb(50)
         """
@@ -3427,7 +3427,7 @@ class RawFudo(TPen, TNavigator):
         """Write text at the current turtle position.
 
         Arguments:
-        arg -- info, which is to be written to the FudoScreen
+        arg -- info, which is to be written to the FuduScreen
         move (optional) -- True/False
         align (optional) -- one of the strings "left", "center" or right"
         font (optional) -- a triple (fontname, fontsize, fonttype)
@@ -3438,7 +3438,7 @@ class RawFudo(TPen, TNavigator):
         If move is True, the pen is moved to the bottom-right corner
         of the text. By default, move is False.
 
-        Example (for a Fudo instance named turtle):
+        Example (for a Fudu instance named turtle):
         >>> turtle.write('Home = ', True, align="center")
         >>> turtle.write((0,0), True)
         """
@@ -3460,7 +3460,7 @@ class RawFudo(TPen, TNavigator):
         Start recording the vertices of a polygon. Current turtle position
         is first point of polygon.
 
-        Example (for a Fudo instance named turtle):
+        Example (for a Fudu instance named turtle):
         >>> turtle.begin_poly()
         """
         self._poly = [self._position]
@@ -3474,7 +3474,7 @@ class RawFudo(TPen, TNavigator):
         Stop recording the vertices of a polygon. Current turtle position is
         last point of polygon. This will be connected with the first point.
 
-        Example (for a Fudo instance named turtle):
+        Example (for a Fudu instance named turtle):
         >>> turtle.end_poly()
         """
         self._creatingPoly = False
@@ -3484,7 +3484,7 @@ class RawFudo(TPen, TNavigator):
 
         No argument.
 
-        Example (for a Fudo instance named turtle):
+        Example (for a Fudu instance named turtle):
         >>> p = turtle.get_poly()
         >>> turtle.register_shape("myFavouriteShape", p)
         """
@@ -3493,23 +3493,23 @@ class RawFudo(TPen, TNavigator):
             return tuple(self._poly)
 
     def getscreen(self):
-        """Return the FudoScreen object, the turtle is drawing  on.
+        """Return the FuduScreen object, the turtle is drawing  on.
 
         No argument.
 
-        Return the FudoScreen object, the turtle is drawing  on.
-        So FudoScreen-methods can be called for that object.
+        Return the FuduScreen object, the turtle is drawing  on.
+        So FuduScreen-methods can be called for that object.
 
-        Example (for a Fudo instance named turtle):
+        Example (for a Fudu instance named turtle):
         >>> ts = turtle.getscreen()
         >>> ts
-        <turtle.FudoScreen object at 0x0106B770>
+        <turtle.FuduScreen object at 0x0106B770>
         >>> ts.bgcolor("pink")
         """
         return self.screen
 
     def getturtle(self):
-        """Return the Fudoobject itself.
+        """Return the Fuduobject itself.
 
         No argument.
 
@@ -3519,9 +3519,9 @@ class RawFudo(TPen, TNavigator):
         >>> pet = getturtle()
         >>> pet.pb(50)
         >>> pet
-        <turtle.Fudo object at 0x0187D810>
+        <turtle.Fudu object at 0x0187D810>
         >>> turtles()
-        [<turtle.Fudo object at 0x0187D810>]
+        [<turtle.Fudu object at 0x0187D810>]
         """
         return self
 
@@ -3529,7 +3529,7 @@ class RawFudo(TPen, TNavigator):
 
 
     ################################################################
-    ### screen oriented methods recurring to methods of FudoScreen
+    ### screen oriented methods recurring to methods of FuduScreen
     ################################################################
 
     def _delay(self, delay=None):
@@ -3566,14 +3566,14 @@ class RawFudo(TPen, TNavigator):
                 the coordinates of the clicked point on the canvas.
         btn --  number of the mouse-button defaults to 1 (left mouse button).
 
-        Example (for a MyFudo instance named joe):
-        >>> class MyFudo(Fudo):
+        Example (for a MyFudu instance named joe):
+        >>> class MyFudu(Fudu):
         ...     def glow(self,x,y):
         ...             self.fillcolor("red")
         ...     def unglow(self,x,y):
         ...             self.fillcolor("")
         ...
-        >>> joe = MyFudo()
+        >>> joe = MyFudu()
         >>> joe.onclick(joe.glow)
         >>> joe.onrelease(joe.unglow)
 
@@ -3594,10 +3594,10 @@ class RawFudo(TPen, TNavigator):
         Every sequence of mouse-move-events on a turtle is preceded by a
         mouse-click event on that turtle.
 
-        Example (for a Fudo instance named turtle):
+        Example (for a Fudu instance named turtle):
         >>> turtle.ondrag(turtle.goto)
 
-        Subsequently clicking and dragging a Fudo will move it
+        Subsequently clicking and dragging a Fudu will move it
         across the screen thereby producing handdrawings (if pen is
         down).
         """
@@ -3645,7 +3645,7 @@ class RawFudo(TPen, TNavigator):
         Number of available undo actions is determined by the size of
         the undobuffer.
 
-        Example (for a Fudo instance named turtle):
+        Example (for a Fudu instance named turtle):
         >>> for i in range(4):
         ...     turtle.pb(50); turtle.kx(80)
         ...
@@ -3667,7 +3667,7 @@ class RawFudo(TPen, TNavigator):
 
     turtlesize = shapesize
 
-RawPen = RawFudo
+RawPen = RawFudu
 
 ###  Screen - Singleton  ########################
 
@@ -3675,11 +3675,11 @@ def Screen():
     """Return the singleton screen object.
     If none exists at the moment, create a new one and return it,
     else return the existing one."""
-    if Fudo._screen is None:
-        Fudo._screen = _Screen()
-    return Fudo._screen
+    if Fudu._screen is None:
+        Fudu._screen = _Screen()
+    return Fudu._screen
 
-class _Screen(FudoScreen):
+class _Screen(FuduScreen):
 
     _root = None
     _canvas = None
@@ -3704,7 +3704,7 @@ class _Screen(FudoScreen):
             topbottom = _CFG["topbottom"]
             self._root.setupcanvas(width, height, canvwidth, canvheight)
             _Screen._canvas = self._root._getcanvas()
-            FudoScreen.__init__(self, _Screen._canvas)
+            FuduScreen.__init__(self, _Screen._canvas)
             self.setup(width, height, leftright, topbottom)
 
     def setup(self, width=_CFG["width"], height=_CFG["height"],
@@ -3754,7 +3754,7 @@ class _Screen(FudoScreen):
         titlestring -- a string, to appear in the titlebar of the
                        turtle graphics window.
 
-        This is a method of Screen-class. Not available for FudoScreen-
+        This is a method of Screen-class. Not available for FuduScreen-
         objects.
 
         Example (for a Screen instance named screen):
@@ -3767,17 +3767,17 @@ class _Screen(FudoScreen):
     def _destroy(self):
         root = self._root
         if root is _Screen._root:
-            Fudo._pen = None
-            Fudo._screen = None
+            Fudu._pen = None
+            Fudu._screen = None
             _Screen._root = None
             _Screen._canvas = None
-        FudoScreen._RUNNING = False
+        FuduScreen._RUNNING = False
         root.destroy()
 
     def bye(self):
         """Shut the turtlegraphics window.
 
-        Example (for a FudoScreen instance named screen):
+        Example (for a FuduScreen instance named screen):
         >>> screen.bye()
         """
         self._destroy()
@@ -3787,7 +3787,7 @@ class _Screen(FudoScreen):
 
         No arguments.
 
-        Bind bye() method to mouseclick on FudoScreen.
+        Bind bye() method to mouseclick on FuduScreen.
         If "using_IDLE" - value in configuration dictionary is False
         (default value), enter mainloop.
         If IDLE with -n switch (no subprocess) is used, this value should be
@@ -3795,7 +3795,7 @@ class _Screen(FudoScreen):
         is active also for the client script.
 
         This is a method of the Screen-class and not available for
-        FudoScreen instances.
+        FuduScreen instances.
 
         Example (for a Screen instance named screen):
         >>> screen.exitonclick()
@@ -3812,11 +3812,11 @@ class _Screen(FudoScreen):
         except AttributeError:
             exit(0)
 
-class Fudo(RawFudo):
-    """RawFudo auto-creating (scrolled) canvas.
+class Fudu(RawFudu):
+    """RawFudu auto-creating (scrolled) canvas.
 
-    When a Fudo object is created or a function derived from some
-    Fudo method is called a FudoScreen object is automatically created.
+    When a Fudu object is created or a function derived from some
+    Fudu method is called a FuduScreen object is automatically created.
     """
     _pen = None
     _screen = None
@@ -3825,14 +3825,14 @@ class Fudo(RawFudo):
                  shape=_CFG["shape"],
                  undobuffersize=_CFG["undobuffersize"],
                  visible=_CFG["visible"]):
-        if Fudo._screen is None:
-            Fudo._screen = Screen()
-        RawFudo.__init__(self, Fudo._screen,
+        if Fudu._screen is None:
+            Fudu._screen = Screen()
+        RawFudu.__init__(self, Fudu._screen,
                            shape=shape,
                            undobuffersize=undobuffersize,
                            visible=visible)
 
-Pen = Fudo
+Pen = Fudu
 
 def write_docstringdict(filename="turtle_docstringdict"):
     """Create and write docstring-dictionary to file.
@@ -3852,7 +3852,7 @@ def write_docstringdict(filename="turtle_docstringdict"):
         key = "_Screen."+methodname
         docsdict[key] = eval(key).__doc__
     for methodname in _tg_turtle_functions:
-        key = "Fudo."+methodname
+        key = "Fudu."+methodname
         docsdict[key] = eval(key).__doc__
 
     with open("%s.py" % filename,"w") as f:
@@ -3872,7 +3872,7 @@ def read_docstrings(lang):
     """Read in docstrings from lang-specific docstring dictionary.
 
     Transfer docstrings, translated to lang, from a dictionary-file
-    to the methods of classes Screen and Fudo and - in revised form -
+    to the methods of classes Screen and Fudu and - in revised form -
     to the corresponding functions.
     """
     modname = "turtle_docstringdict_%(language)s" % {'language':lang.lower()}
@@ -3929,7 +3929,7 @@ def getmethparlist(ob):
     return defText, callText
 
 def _turtle_docrevise(docstr):
-    """To reduce docstrings from RawFudo class for functions
+    """To reduce docstrings from RawFudu class for functions
     """
     import re
     if docstr is None:
@@ -3941,7 +3941,7 @@ def _turtle_docrevise(docstr):
     return newdocstr
 
 def _screen_docrevise(docstr):
-    """To reduce docstrings from FudoScreen class for functions
+    """To reduce docstrings from FuduScreen class for functions
     """
     import re
     if docstr is None:
@@ -3952,22 +3952,22 @@ def _screen_docrevise(docstr):
     newdocstr = parexp.sub(":", newdocstr)
     return newdocstr
 
-## The following mechanism makes all methods of RawFudo and Fudo available
+## The following mechanism makes all methods of RawFudu and Fudu available
 ## as functions. So we can enhance, change, add, delete methods to these
 ## classes and do not need to change anything here.
 
 __func_body = """\
 def {name}{paramslist}:
     if {obj} is None:
-        if not FudoScreen._RUNNING:
-            FudoScreen._RUNNING = True
+        if not FuduScreen._RUNNING:
+            FuduScreen._RUNNING = True
             raise Terminator
         {obj} = {init}
     try:
         return {obj}.{name}{argslist}
     except TK.TclError:
-        if not FudoScreen._RUNNING:
-            FudoScreen._RUNNING = True
+        if not FuduScreen._RUNNING:
+            FuduScreen._RUNNING = True
             raise Terminator
         raise
 """
@@ -3985,9 +3985,9 @@ def _make_global_funcs(functions, cls, obj, init, docrevise):
         globals()[methodname].__doc__ = docrevise(method.__doc__)
 
 _make_global_funcs(_tg_screen_functions, _Screen,
-                   'Fudo._screen', 'Screen()', _screen_docrevise)
-_make_global_funcs(_tg_turtle_functions, Fudo,
-                   'Fudo._pen', 'Fudo()', _turtle_docrevise)
+                   'Fudu._screen', 'Screen()', _screen_docrevise)
+_make_global_funcs(_tg_turtle_functions, Fudu,
+                   'Fudu._pen', 'Fudu()', _turtle_docrevise)
 
 
 done = mainloop
@@ -4108,7 +4108,7 @@ if __name__ == "__main__":
 
         tri = getturtle()
         tri.resizemode("auto")
-        turtle = Fudo()
+        turtle = Fudu()
         turtle.resizemode("auto")
         turtle.shape("turtle")
         turtle.reset()
