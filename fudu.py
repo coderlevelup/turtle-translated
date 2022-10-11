@@ -1602,7 +1602,7 @@ class TNavigator(object):
         self._setDegreesPerAU(math.tau)
 
     def _go(self, distance):
-        """hambisa ufudo phambili ngomgama ochaziweyo"""
+        """hambisa ufudu phambili ngebanga elithile"""
         ende = self._position + self._orient * distance
         self._goto(ende)
 
@@ -1616,24 +1616,24 @@ class TNavigator(object):
         self._position = end
 
     def phambili(self, distance):
-        """Hambisa ufudo phambili ngomgama ochaziweyo.
+        """Hambisa ufudu phambili ngebanga elishiwo.
 
-        Aliases: phambili | pb
+        Iziteketiso: phambili | pb
 
-        Argument:
-        distance -- a number (integer or float)
+        Ukungqubuzana:
+        ibanga -- inombolo (inamba noma ukuntanta)
 
-        Move the turtle forward by the specified distance, in the direction
-        the turtle is headed.
+        Hambisa ufudu phambili ngebanga elishiwo, ulibhekise ngakulo
+        ufudu luyalibangisa.
 
-        Example (for a Fudo instance named turtle):
+        Isibonelo (isibonelo soFudu oluqanjwe ngofudu):
         >>> turtle.position()
         (0.00, 0.00)
-        >>> turtle.forward(25)
-        >>> turtle.position()
+        >>> ufudu.phambili(25)
+        >>> ufudu.position()
         (25.00,0.00)
-        >>> turtle.forward(-75)
-        >>> turtle.position()
+        >>> ufudu.phambili(-75)
+        >>> ufudu.position()
         (-50.00,0.00)
         """
         self._go(distance)
