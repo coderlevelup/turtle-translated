@@ -8,7 +8,9 @@ The primary goal of this project is to make it more delightful to learn python b
 
 Clone this repo (or download the specific language file).
 
-Either run python in the repo folder (or the folder where the file is), or put the relevant file into python path.
+```
+pip install .
+```
 
 ## Usage
 Example of using the isiXhosa translation `fudo`
