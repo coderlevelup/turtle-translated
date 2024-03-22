@@ -3923,7 +3923,7 @@ def getmethparlist(ob):
                 call_args.append(f'**{param.name}')
             case _:
                 raise RuntimeError('Unsupported parameter kind', param.kind)
-    call_text = f'({', '.join(call_args)})'
+    call_text = f"({', '.join(call_args)})" # changed from 3.12 implementation to support older f-strings
 
     return str(func_sig), call_text
 
