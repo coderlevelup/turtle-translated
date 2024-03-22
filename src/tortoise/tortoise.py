@@ -67,10 +67,10 @@ _tg_screen_functions = ['addshape', 'bgcolour', 'bgpic', 'bye',
         'register_shape', 'resetscreen', 'screensize', 'setup',
         'setworldcoordinates', 'textinput', 'title', 'tracer', 'tortoises', 'update',
         'window_height', 'window_width']
-_tg_tortoise_functions = ['back', 'backward', 'begin_fill', 'begin_poly', 'bk',
+_tg_tortoise_functions = ['back', 'backward', 'backwards', 'begin_fill', 'begin_poly', 'bk',
         'circle', 'clear', 'clearstamp', 'clearstamps', 'clone', 'colour',
         'degrees', 'distance', 'dot', 'down', 'end_fill', 'end_poly', 'fd',
-        'fillcolour', 'filling', 'forward', 'get_poly', 'getpen', 'getscreen', 'get_shapepoly',
+        'fillcolour', 'filling', 'forward', 'forwards', 'get_poly', 'getpen', 'getscreen', 'get_shapepoly',
         'gettortoise', 'goto', 'heading', 'hidetortoise', 'home', 'ht', 'isdown',
         'isvisible', 'left', 'lt', 'onclick', 'ondrag', 'onrelease', 'pd',
         'pen', 'pencolour', 'pendown', 'pensize', 'penup', 'pos', 'position',
@@ -1955,8 +1955,10 @@ class TNavigator(object):
         """dummy method - to be overwritten by child class"""
 
     fd = forward
+    forwards = forward
     bk = back
     backward = back
+    backwards = back
     rt = right
     lt = left
     position = pos
