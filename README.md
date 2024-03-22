@@ -8,9 +8,11 @@ The primary goal of this project is to make it more delightful to learn python b
 
 Clone this repo (or download the specific language file).
 
+From the project folder run:
 ```
 pip install .
 ```
+(it's not yet in PyPI) 
 
 ## Usage
 Example of using the isiXhosa translation `fudo`
@@ -30,9 +32,9 @@ DESCRIPTION
     nguWally Feurzig kunye noSeymour Papert ngo-1966.
 
     Yiba nomfanekiso wofudo lwerobhothi oluqala ku- (0, 0) kwinqwelo-moya ye-x. Emva kwe ``import ufudo``, lunike
-    umyalelo turtle.phambili(15), kwaye iyashukuma (on-screen!) 15 pixels in
+    umyalelo fudo.phambili(15), kwaye iyashukuma (on-screen!) 15 pixels in
     icala elijonge ngakulo, lizoba umgca njengoko lihamba. Yinike i
-    umyalelo turtle.ekunene(25), kwaye ijikeleza-endaweni 25 degrees ngokwewotshi.
+    umyalelo fudo.ekunene(25), kwaye ijikeleza-endaweni 25 degrees ngokwewotshi.
 
     Ngokudibanisa le miyalelo kunye nezinye ezifanayo, iimilo ezintsonkothileyo kunye
     imifanekiso inokuzotywa ngokulula.
@@ -48,7 +50,7 @@ moves the turtle forward 100 pixels
 >>> thabo.ekunene(90)
 turns the turtle right 90 degrees
 
->>> thabo.umva(90)
+>>> thabo.umva(100)
 moves the turtle back 100 pixels
 
 >>> thabo.ekhohlo(90)
