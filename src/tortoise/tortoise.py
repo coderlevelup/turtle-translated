@@ -28,7 +28,7 @@ Turtle graphics is a popular way for introducing programming to
 kids. It was part of the original Logo programming language developed
 by Wally Feurzig and Seymour Papert in 1966.
 
-This module is a translasion of turtle.py from the Python standard distribution
+This module is a translasion of turtle.py from the Python standard distribution v3.12
 to en-gb, correcting e.g. turtle-> tortoise, and color-> colour,
 which lowers the floor for educators introducing learners to python.
 https://en.wikipedia.org/wiki/Tortoise#Terminology
@@ -60,20 +60,20 @@ from tkinter import simpledialog
 
 _tg_classes = ['ScrolledCanvas', 'TortoiseScreen', 'Screen',
                'RawTortoise', 'Tortoise', 'RawPen', 'Pen', 'Shape', 'Vec2D']
-_tg_screen_functions = ['addshape', 'bgcolor', 'bgpic', 'bye',
-        'clearscreen', 'colormode', 'delay', 'exitonclick', 'getcanvas',
+_tg_screen_functions = ['addshape', 'bgcolour', 'bgpic', 'bye',
+        'clearscreen', 'colourmode', 'delay', 'exitonclick', 'getcanvas',
         'getshapes', 'listen', 'mainloop', 'mode', 'numinput',
         'onkey', 'onkeypress', 'onkeyrelease', 'onscreenclick', 'ontimer',
         'register_shape', 'resetscreen', 'screensize', 'setup',
         'setworldcoordinates', 'textinput', 'title', 'tracer', 'tortoises', 'update',
         'window_height', 'window_width']
 _tg_tortoise_functions = ['back', 'backward', 'begin_fill', 'begin_poly', 'bk',
-        'circle', 'clear', 'clearstamp', 'clearstamps', 'clone', 'color',
+        'circle', 'clear', 'clearstamp', 'clearstamps', 'clone', 'colour',
         'degrees', 'distance', 'dot', 'down', 'end_fill', 'end_poly', 'fd',
-        'fillcolor', 'filling', 'forward', 'get_poly', 'getpen', 'getscreen', 'get_shapepoly',
+        'fillcolour', 'filling', 'forward', 'get_poly', 'getpen', 'getscreen', 'get_shapepoly',
         'gettortoise', 'goto', 'heading', 'hidetortoise', 'home', 'ht', 'isdown',
         'isvisible', 'left', 'lt', 'onclick', 'ondrag', 'onrelease', 'pd',
-        'pen', 'pencolor', 'pendown', 'pensize', 'penup', 'pos', 'position',
+        'pen', 'pencolour', 'pendown', 'pensize', 'penup', 'pos', 'position',
         'pu', 'radians', 'right', 'reset', 'resizemode', 'rt',
         'seth', 'setheading', 'setpos', 'setposition', 'settiltangle',
         'setundobuffer', 'setx', 'sety', 'shape', 'shapesize', 'shapetransform', 'shearfactor', 'showtortoise',
@@ -96,12 +96,12 @@ _CFG = {"width" : 0.5,               # Screen
         "leftright": None,
         "topbottom": None,
         "mode": "standard",          # TortoiseScreen
-        "colormode": 1.0,
+        "colourmode": 1.0,
         "delay": 10,
         "undobuffersize": 1000,      # RawTortoise
         "shape": "classic",
-        "pencolor" : "black",
-        "fillcolor" : "black",
+        "pencolour" : "black",
+        "fillcolour" : "black",
         "resizemode" : "noresize",
         "visible" : True,
         "language": "english",        # docstrings
@@ -222,7 +222,7 @@ class Vec2D(tuple):
 
 
 ##############################################################################
-### From here up to line    : Tkinter - Interface for tortoise.py            ###
+### From here up to line    : Tkinter - Interface for tortoise.py          ###
 ### May be replaced by an interface to some different graphics toolkit     ###
 ##############################################################################
 
@@ -443,8 +443,8 @@ class TortoiseScreenBase(object):
         """Configure polygonitem polyitem according to provided
         arguments:
         coordlist is sequence of coordinates
-        fill is filling color
-        outline is outline color
+        fill is filling colour
+        outline is outline colour
         top is a boolean value, which specifies if polyitem
         will be put on top of the canvas' displaylist so it
         will not be covered by other items.
@@ -473,7 +473,7 @@ class TortoiseScreenBase(object):
                   fill=None, width=None, top=False):
         """Configure lineitem according to provided arguments:
         coordlist is sequence of coordinates
-        fill is drawing color
+        fill is drawing colour
         width is width of drawn line.
         top is a boolean value, which specifies if polyitem
         will be put on top of the canvas' displaylist so it
@@ -507,28 +507,28 @@ class TortoiseScreenBase(object):
         """Delay subsequent canvas actions for delay ms."""
         self.cv.after(delay)
 
-    def _iscolorstring(self, color):
-        """Check if the string color is a legal Tkinter color string.
+    def _iscolourstring(self, colour):
+        """Check if the string colour is a legal Tkinter colour string.
         """
         try:
-            rgb = self.cv.winfo_rgb(color)
+            rgb = self.cv.winfo_rgb(colour)
             ok = True
         except TK.TclError:
             ok = False
         return ok
 
-    def _bgcolor(self, color=None):
-        """Set canvas' backgroundcolor if color is not None,
-        else return backgroundcolor."""
-        if color is not None:
-            self.cv.config(bg = color)
+    def _bgcolour(self, colour=None):
+        """Set canvas' backgroundcolour if colour is not None,
+        else return backgroundcolour."""
+        if colour is not None:
+            self.cv.config(bg = colour)
             self._update()
         else:
             return self.cv.cget("bg")
 
-    def _write(self, pos, txt, align, font, pencolor):
+    def _write(self, pos, txt, align, font, pencolour):
         """Write txt at pos in canvas with specified font
-        and color.
+        and colour.
         Return text item and x-coord of right bottom corner
         of text's bounding box."""
         x, y = pos
@@ -536,7 +536,7 @@ class TortoiseScreenBase(object):
         y = y * self.yscale
         anchor = {"left":"sw", "center":"s", "right":"se" }
         item = self.cv.create_text(x-1, -y, text = txt, anchor = anchor[align],
-                                        fill = pencolor, font = font)
+                                        fill = pencolour, font = font)
         x0, y0, x1, y1 = self.cv.bbox(item)
         return item, x1-1
 
@@ -834,8 +834,8 @@ class Shape(object):
         """Add component to a shape of type compound.
 
         Arguments: poly is a polygon, i. e. a tuple of number pairs.
-        fill is the fillcolor of the component,
-        outline is the outline color of the component.
+        fill is the fillcolour of the component,
+        outline is the outline colour of the component.
 
         call (for a Shapeobject namend s):
         --   s.addcomponent(((0,0), (10,10), (-10,10)), "red", "blue")
@@ -893,7 +893,7 @@ class Tbuffer(object):
 
 
 class TortoiseScreen(TortoiseScreenBase):
-    """Provides screen oriented methods like bgcolor etc.
+    """Provides screen oriented methods like bgcolour etc.
 
     Only relies upon the methods of TortoiseScreenBase and NOT
     upon components of the underlying graphics toolkit -
@@ -902,7 +902,7 @@ class TortoiseScreen(TortoiseScreenBase):
     _RUNNING = True
 
     def __init__(self, cv, mode=_CFG["mode"],
-                 colormode=_CFG["colormode"], delay=_CFG["delay"]):
+                 colourmode=_CFG["colourmode"], delay=_CFG["delay"]):
         TortoiseScreenBase.__init__(self, cv)
 
         self._shapes = {
@@ -930,7 +930,7 @@ class TortoiseScreen(TortoiseScreenBase):
 
         self._mode = mode
         self._delayvalue = delay
-        self._colormode = _CFG["colormode"]
+        self._colourmode = _CFG["colourmode"]
         self._keys = []
         self.clear()
         if sys.platform == 'darwin':
@@ -955,14 +955,14 @@ class TortoiseScreen(TortoiseScreenBase):
         Note: this method is not available as function.
         """
         self._delayvalue = _CFG["delay"]
-        self._colormode = _CFG["colormode"]
+        self._colourmode = _CFG["colourmode"]
         self._delete("all")
         self._bgpic = self._createimage("")
         self._bgpicname = "nopic"
         self._tracing = 1
         self._updatecounter = 0
         self._tortoises = []
-        self.bgcolor("white")
+        self.bgcolour("white")
         for btn in 1, 2, 3:
             self.onclick(None, btn)
         self.onkeypress(None)
@@ -1079,34 +1079,34 @@ class TortoiseScreen(TortoiseScreenBase):
         ## else shape assumed to be Shape-instance
         self._shapes[name] = shape
 
-    def _colorstr(self, color):
-        """Return color string corresponding to args.
+    def _colourstr(self, colour):
+        """Return colour string corresponding to args.
 
         Argument may be a string or a tuple of three
-        numbers corresponding to actual colormode,
-        i.e. in the range 0<=n<=colormode.
+        numbers corresponding to actual colourmode,
+        i.e. in the range 0<=n<=colourmode.
 
-        If the argument doesn't represent a color,
+        If the argument doesn't represent a colour,
         an error is raised.
         """
-        if len(color) == 1:
-            color = color[0]
-        if isinstance(color, str):
-            if self._iscolorstring(color) or color == "":
-                return color
+        if len(colour) == 1:
+            colour = colour[0]
+        if isinstance(colour, str):
+            if self._iscolourstring(colour) or colour == "":
+                return colour
             else:
-                raise TortoiseGraphicsError("bad color string: %s" % str(color))
+                raise TortoiseGraphicsError("bad colour string: %s" % str(colour))
         try:
-            r, g, b = color
+            r, g, b = colour
         except (TypeError, ValueError):
-            raise TortoiseGraphicsError("bad color arguments: %s" % str(color))
-        if self._colormode == 1.0:
+            raise TortoiseGraphicsError("bad colour arguments: %s" % str(colour))
+        if self._colourmode == 1.0:
             r, g, b = [round(255.0*x) for x in (r, g, b)]
         if not ((0 <= r <= 255) and (0 <= g <= 255) and (0 <= b <= 255)):
-            raise TortoiseGraphicsError("bad color sequence: %s" % str(color))
+            raise TortoiseGraphicsError("bad colour sequence: %s" % str(colour))
         return "#%02x%02x%02x" % (r, g, b)
 
-    def _color(self, cstr):
+    def _colour(self, cstr):
         if not cstr.startswith("#"):
             return cstr
         if len(cstr) == 7:
@@ -1114,29 +1114,29 @@ class TortoiseScreen(TortoiseScreenBase):
         elif len(cstr) == 4:
             cl = [16*int(cstr[h], 16) for h in cstr[1:]]
         else:
-            raise TortoiseGraphicsError("bad colorstring: %s" % cstr)
-        return tuple(c * self._colormode/255 for c in cl)
+            raise TortoiseGraphicsError("bad colourstring: %s" % cstr)
+        return tuple(c * self._colourmode/255 for c in cl)
 
-    def colormode(self, cmode=None):
-        """Return the colormode or set it to 1.0 or 255.
+    def colourmode(self, cmode=None):
+        """Return the colourmode or set it to 1.0 or 255.
 
         Optional argument:
         cmode -- one of the values 1.0 or 255
 
-        r, g, b values of colortriples have to be in range 0..cmode.
+        r, g, b values of colourtriples have to be in range 0..cmode.
 
         Example (for a TortoiseScreen instance named screen):
-        >>> screen.colormode()
+        >>> screen.colourmode()
         1.0
-        >>> screen.colormode(255)
-        >>> pencolor(240,160,80)
+        >>> screen.colourmode(255)
+        >>> pencolour(240,160,80)
         """
         if cmode is None:
-            return self._colormode
+            return self._colourmode
         if cmode == 1.0:
-            self._colormode = float(cmode)
+            self._colourmode = float(cmode)
         elif cmode == 255:
-            self._colormode = int(cmode)
+            self._colourmode = int(cmode)
 
     def reset(self):
         """Reset all Tortoises on the Screen to their initial state.
@@ -1159,28 +1159,28 @@ class TortoiseScreen(TortoiseScreenBase):
         """
         return self._tortoises
 
-    def bgcolor(self, *args):
-        """Set or return backgroundcolor of the TortoiseScreen.
+    def bgcolour(self, *args):
+        """Set or return backgroundcolour of the TortoiseScreen.
 
-        Arguments (if given): a color string or three numbers
-        in the range 0..colormode or a 3-tuple of such numbers.
+        Arguments (if given): a colour string or three numbers
+        in the range 0..colourmode or a 3-tuple of such numbers.
 
         Example (for a TortoiseScreen instance named screen):
-        >>> screen.bgcolor("orange")
-        >>> screen.bgcolor()
+        >>> screen.bgcolour("orange")
+        >>> screen.bgcolour()
         'orange'
-        >>> screen.bgcolor(0.5,0,0.5)
-        >>> screen.bgcolor()
+        >>> screen.bgcolour(0.5,0,0.5)
+        >>> screen.bgcolour()
         '#800080'
         """
         if args:
-            color = self._colorstr(args)
+            colour = self._colourstr(args)
         else:
-            color = None
-        color = self._bgcolor(color)
-        if color is not None:
-            color = self._color(color)
-        return color
+            colour = None
+        colour = self._bgcolour(colour)
+        if colour is not None:
+            colour = self._colour(colour)
+        return colour
 
     def tracer(self, n=None, delay=None):
         """Turns tortoise animation on/off and set delay for update drawings.
@@ -1428,7 +1428,7 @@ class TortoiseScreen(TortoiseScreenBase):
         Optional arguments:
         canvwidth -- positive integer, new width of canvas in pixels
         canvheight --  positive integer, new height of canvas in pixels
-        bg -- colorstring or color-tuple, new backgroundcolor
+        bg -- colourstring or colour-tuple, new backgroundcolour
         If no arguments are given, return current (canvaswidth, canvasheight)
 
         Do not alter the drawing window. To observe hidden parts of
@@ -1974,12 +1974,12 @@ class TPen(object):
         self.undobuffer = None
         TPen._reset(self)
 
-    def _reset(self, pencolor=_CFG["pencolor"],
-                     fillcolor=_CFG["fillcolor"]):
+    def _reset(self, pencolour=_CFG["pencolour"],
+                     fillcolour=_CFG["fillcolour"]):
         self._pensize = 1
         self._shown = True
-        self._pencolor = pencolor
-        self._fillcolor = fillcolor
+        self._pencolour = pencolour
+        self._fillcolour = fillcolour
         self._drawing = True
         self._speed = 3
         self._stretchfactor = (1., 1.)
@@ -2120,124 +2120,124 @@ class TPen(object):
             speed = 0
         self.pen(speed=speed)
 
-    def color(self, *args):
-        """Return or set the pencolor and fillcolor.
+    def colour(self, *args):
+        """Return or set the pencolour and fillcolour.
 
         Arguments:
         Several input formats are allowed.
         They use 0, 1, 2, or 3 arguments as follows:
 
-        color()
-            Return the current pencolor and the current fillcolor
-            as a pair of color specification strings as are returned
-            by pencolor and fillcolor.
-        color(colorstring), color((r,g,b)), color(r,g,b)
-            inputs as in pencolor, set both, fillcolor and pencolor,
+        colour()
+            Return the current pencolour and the current fillcolour
+            as a pair of colour specification strings as are returned
+            by pencolour and fillcolour.
+        colour(colourstring), colour((r,g,b)), colour(r,g,b)
+            inputs as in pencolour, set both, fillcolour and pencolour,
             to the given value.
-        color(colorstring1, colorstring2),
-        color((r1,g1,b1), (r2,g2,b2))
-            equivalent to pencolor(colorstring1) and fillcolor(colorstring2)
+        colour(colourstring1, colourstring2),
+        colour((r1,g1,b1), (r2,g2,b2))
+            equivalent to pencolour(colourstring1) and fillcolour(colourstring2)
             and analogously, if the other input format is used.
 
         If tortoiseshape is a polygon, outline and interior of that polygon
-        is drawn with the newly set colors.
-        For more info see: pencolor, fillcolor
+        is drawn with the newly set colours.
+        For more info see: pencolour, fillcolour
 
         Example (for a Tortoise instance named tortoise):
-        >>> tortoise.color('red', 'green')
-        >>> tortoise.color()
+        >>> tortoise.colour('red', 'green')
+        >>> tortoise.colour()
         ('red', 'green')
-        >>> colormode(255)
-        >>> color((40, 80, 120), (160, 200, 240))
-        >>> color()
+        >>> colourmode(255)
+        >>> colour((40, 80, 120), (160, 200, 240))
+        >>> colour()
         ('#285078', '#a0c8f0')
         """
         if args:
             l = len(args)
             if l == 1:
-                pcolor = fcolor = args[0]
+                pcolour = fcolour = args[0]
             elif l == 2:
-                pcolor, fcolor = args
+                pcolour, fcolour = args
             elif l == 3:
-                pcolor = fcolor = args
-            pcolor = self._colorstr(pcolor)
-            fcolor = self._colorstr(fcolor)
-            self.pen(pencolor=pcolor, fillcolor=fcolor)
+                pcolour = fcolour = args
+            pcolour = self._colourstr(pcolour)
+            fcolour = self._colourstr(fcolour)
+            self.pen(pencolour=pcolour, fillcolour=fcolour)
         else:
-            return self._color(self._pencolor), self._color(self._fillcolor)
+            return self._colour(self._pencolour), self._colour(self._fillcolour)
 
-    def pencolor(self, *args):
-        """ Return or set the pencolor.
+    def pencolour(self, *args):
+        """ Return or set the pencolour.
 
         Arguments:
         Four input formats are allowed:
-          - pencolor()
-            Return the current pencolor as color specification string,
+          - pencolour()
+            Return the current pencolour as colour specification string,
             possibly in hex-number format (see example).
-            May be used as input to another color/pencolor/fillcolor call.
-          - pencolor(colorstring)
-            s is a Tk color specification string, such as "red" or "yellow"
-          - pencolor((r, g, b))
-            *a tuple* of r, g, and b, which represent, an RGB color,
-            and each of r, g, and b are in the range 0..colormode,
-            where colormode is either 1.0 or 255
-          - pencolor(r, g, b)
-            r, g, and b represent an RGB color, and each of r, g, and b
-            are in the range 0..colormode
+            May be used as input to another colour/pencolour/fillcolour call.
+          - pencolour(colourstring)
+            s is a Tk colour specification string, such as "red" or "yellow"
+          - pencolour((r, g, b))
+            *a tuple* of r, g, and b, which represent, an RGB colour,
+            and each of r, g, and b are in the range 0..colourmode,
+            where colourmode is either 1.0 or 255
+          - pencolour(r, g, b)
+            r, g, and b represent an RGB colour, and each of r, g, and b
+            are in the range 0..colourmode
 
         If tortoiseshape is a polygon, the outline of that polygon is drawn
-        with the newly set pencolor.
+        with the newly set pencolour.
 
         Example (for a Tortoise instance named tortoise):
-        >>> tortoise.pencolor('brown')
+        >>> tortoise.pencolour('brown')
         >>> tup = (0.2, 0.8, 0.55)
-        >>> tortoise.pencolor(tup)
-        >>> tortoise.pencolor()
+        >>> tortoise.pencolour(tup)
+        >>> tortoise.pencolour()
         '#33cc8c'
         """
         if args:
-            color = self._colorstr(args)
-            if color == self._pencolor:
+            colour = self._colourstr(args)
+            if colour == self._pencolour:
                 return
-            self.pen(pencolor=color)
+            self.pen(pencolour=colour)
         else:
-            return self._color(self._pencolor)
+            return self._colour(self._pencolour)
 
-    def fillcolor(self, *args):
-        """ Return or set the fillcolor.
+    def fillcolour(self, *args):
+        """ Return or set the fillcolour.
 
         Arguments:
         Four input formats are allowed:
-          - fillcolor()
-            Return the current fillcolor as color specification string,
+          - fillcolour()
+            Return the current fillcolour as colour specification string,
             possibly in hex-number format (see example).
-            May be used as input to another color/pencolor/fillcolor call.
-          - fillcolor(colorstring)
-            s is a Tk color specification string, such as "red" or "yellow"
-          - fillcolor((r, g, b))
-            *a tuple* of r, g, and b, which represent, an RGB color,
-            and each of r, g, and b are in the range 0..colormode,
-            where colormode is either 1.0 or 255
-          - fillcolor(r, g, b)
-            r, g, and b represent an RGB color, and each of r, g, and b
-            are in the range 0..colormode
+            May be used as input to another colour/pencolour/fillcolour call.
+          - fillcolour(colourstring)
+            s is a Tk colour specification string, such as "red" or "yellow"
+          - fillcolour((r, g, b))
+            *a tuple* of r, g, and b, which represent, an RGB colour,
+            and each of r, g, and b are in the range 0..colourmode,
+            where colourmode is either 1.0 or 255
+          - fillcolour(r, g, b)
+            r, g, and b represent an RGB colour, and each of r, g, and b
+            are in the range 0..colourmode
 
         If tortoiseshape is a polygon, the interior of that polygon is drawn
-        with the newly set fillcolor.
+        with the newly set fillcolour.
 
         Example (for a Tortoise instance named tortoise):
-        >>> tortoise.fillcolor('violet')
-        >>> col = tortoise.pencolor()
-        >>> tortoise.fillcolor(col)
-        >>> tortoise.fillcolor(0, .5, 0)
+        >>> tortoise.fillcolour('violet')
+        >>> col = tortoise.pencolour()
+        >>> tortoise.fillcolour(col)
+        >>> tortoise.fillcolour(0, .5, 0)
         """
         if args:
-            color = self._colorstr(args)
-            if color == self._fillcolor:
+            colour = self._colourstr(args)
+            if colour == self._fillcolour:
                 return
-            self.pen(fillcolor=color)
+            self.pen(fillcolour=colour)
         else:
-            return self._color(self._fillcolor)
+            return self._colour(self._fillcolour)
 
     def teleport(self, x=None, y=None, *, fill_gap: bool = False) -> None:
         """To be overwritten by child class RawTortoise.
@@ -2301,8 +2301,8 @@ class TPen(object):
         with the following key/value pairs:
            "shown"      :   True/False
            "pendown"    :   True/False
-           "pencolor"   :   color-string or color-tuple
-           "fillcolor"  :   color-string or color-tuple
+           "pencolour"   :   colour-string or colour-tuple
+           "fillcolour"  :   colour-string or colour-tuple
            "pensize"    :   positive number
            "speed"      :   number in range 0..10
            "resizemode" :   "auto" or "user" or "noresize"
@@ -2318,28 +2318,28 @@ class TPen(object):
 
 
         Examples (for a Tortoise instance named tortoise):
-        >>> tortoise.pen(fillcolor="black", pencolor="red", pensize=10)
+        >>> tortoise.pen(fillcolour="black", pencolour="red", pensize=10)
         >>> tortoise.pen()
         {'pensize': 10, 'shown': True, 'resizemode': 'auto', 'outline': 1,
-        'pencolor': 'red', 'pendown': True, 'fillcolor': 'black',
+        'pencolour': 'red', 'pendown': True, 'fillcolour': 'black',
         'stretchfactor': (1,1), 'speed': 3, 'shearfactor': 0.0}
         >>> penstate=tortoise.pen()
-        >>> tortoise.color("yellow","")
+        >>> tortoise.colour("yellow","")
         >>> tortoise.penup()
         >>> tortoise.pen()
         {'pensize': 10, 'shown': True, 'resizemode': 'auto', 'outline': 1,
-        'pencolor': 'yellow', 'pendown': False, 'fillcolor': '',
+        'pencolour': 'yellow', 'pendown': False, 'fillcolour': '',
         'stretchfactor': (1,1), 'speed': 3, 'shearfactor': 0.0}
-        >>> p.pen(penstate, fillcolor="green")
+        >>> p.pen(penstate, fillcolour="green")
         >>> p.pen()
         {'pensize': 10, 'shown': True, 'resizemode': 'auto', 'outline': 1,
-        'pencolor': 'red', 'pendown': True, 'fillcolor': 'green',
+        'pencolour': 'red', 'pendown': True, 'fillcolour': 'green',
         'stretchfactor': (1,1), 'speed': 3, 'shearfactor': 0.0}
         """
         _pd =  {"shown"         : self._shown,
                 "pendown"       : self._drawing,
-                "pencolor"      : self._pencolor,
-                "fillcolor"     : self._fillcolor,
+                "pencolour"      : self._pencolour,
+                "fillcolour"     : self._fillcolour,
                 "pensize"       : self._pensize,
                 "speed"         : self._speed,
                 "resizemode"    : self._resizemode,
@@ -2369,10 +2369,10 @@ class TPen(object):
         if "pendown" in p:
             if self._drawing != p["pendown"]:
                 newLine = True
-        if "pencolor" in p:
-            if isinstance(p["pencolor"], tuple):
-                p["pencolor"] = self._colorstr((p["pencolor"],))
-            if self._pencolor != p["pencolor"]:
+        if "pencolour" in p:
+            if isinstance(p["pencolour"], tuple):
+                p["pencolour"] = self._colourstr((p["pencolour"],))
+            if self._pencolour != p["pencolour"]:
                 newLine = True
         if "pensize" in p:
             if self._pensize != p["pensize"]:
@@ -2381,14 +2381,14 @@ class TPen(object):
             self._newLine()
         if "pendown" in p:
             self._drawing = p["pendown"]
-        if "pencolor" in p:
-            self._pencolor = p["pencolor"]
+        if "pencolour" in p:
+            self._pencolour = p["pencolour"]
         if "pensize" in p:
             self._pensize = p["pensize"]
-        if "fillcolor" in p:
-            if isinstance(p["fillcolor"], tuple):
-                p["fillcolor"] = self._colorstr((p["fillcolor"],))
-            self._fillcolor = p["fillcolor"]
+        if "fillcolour" in p:
+            if isinstance(p["fillcolour"], tuple):
+                p["fillcolour"] = self._colourstr((p["fillcolour"],))
+            self._fillcolour = p["fillcolour"]
         if "speed" in p:
             self._speed = p["speed"]
         if "resizemode" in p:
@@ -2420,9 +2420,9 @@ class TPen(object):
         """dummy method - to be overwritten by child class"""
     def _update(self, count=True, forced=False):
         """dummy method - to be overwritten by child class"""
-    def _color(self, args):
+    def _colour(self, args):
         """dummy method - to be overwritten by child class"""
-    def _colorstr(self, args):
+    def _colourstr(self, args):
         """dummy method - to be overwritten by child class"""
 
     width = pensize
@@ -2604,7 +2604,7 @@ class RawTortoise(TPen, TNavigator):
             return
         if len(self.currentLine)>1:
             self.screen._drawline(self.currentLineItem, self.currentLine,
-                                  self._pencolor, self._pensize)
+                                  self._pencolour, self._pensize)
 
     def _update(self):
         """Perform a Tortoise-data update.
@@ -2645,25 +2645,25 @@ class RawTortoise(TPen, TNavigator):
         """
         return self.screen.tracer(flag, delay)
 
-    def _color(self, args):
-        return self.screen._color(args)
+    def _colour(self, args):
+        return self.screen._colour(args)
 
-    def _colorstr(self, args):
-        return self.screen._colorstr(args)
+    def _colourstr(self, args):
+        return self.screen._colourstr(args)
 
     def _cc(self, args):
-        """Convert colortriples to hexstrings.
+        """Convert colourtriples to hexstrings.
         """
         if isinstance(args, str):
             return args
         try:
             r, g, b = args
         except (TypeError, ValueError):
-            raise TortoiseGraphicsError("bad color arguments: %s" % str(args))
-        if self.screen._colormode == 1.0:
+            raise TortoiseGraphicsError("bad colour arguments: %s" % str(args))
+        if self.screen._colourmode == 1.0:
             r, g, b = [round(255.0*x) for x in (r, g, b)]
         if not ((0 <= r <= 255) and (0 <= g <= 255) and (0 <= b <= 255)):
-            raise TortoiseGraphicsError("bad color sequence: %s" % str(args))
+            raise TortoiseGraphicsError("bad colour sequence: %s" % str(args))
         return "#%02x%02x%02x" % (r, g, b)
 
     def teleport(self, x=None, y=None, *, fill_gap: bool = False) -> None:
@@ -3026,7 +3026,7 @@ class RawTortoise(TPen, TNavigator):
                 elif self._resizemode == "auto": w = self._pensize
                 else: w =self._outlinewidth
                 shape = self._polytrafo(self._getshapepoly(tshape))
-                fc, oc = self._fillcolor, self._pencolor
+                fc, oc = self._fillcolour, self._pencolour
                 screen._drawpoly(titem, shape, fill=fc, outline=oc,
                                                       width=w, top=True)
             elif ttype == "image":
@@ -3061,7 +3061,7 @@ class RawTortoise(TPen, TNavigator):
         used to delete it by calling clearstamp(stamp_id).
 
         Example (for a Tortoise instance named tortoise):
-        >>> tortoise.color("blue")
+        >>> tortoise.colour("blue")
         >>> tortoise.stamp()
         13
         >>> tortoise.fd(50)
@@ -3076,7 +3076,7 @@ class RawTortoise(TPen, TNavigator):
             elif self._resizemode == "auto": w = self._pensize
             else: w =self._outlinewidth
             shape = self._polytrafo(self._getshapepoly(tshape))
-            fc, oc = self._fillcolor, self._pencolor
+            fc, oc = self._fillcolour, self._pencolour
             screen._drawpoly(stitem, shape, fill=fc, outline=oc,
                                                   width=w, top=True)
         elif ttype == "image":
@@ -3125,7 +3125,7 @@ class RawTortoise(TPen, TNavigator):
         stampid - an integer, must be return value of previous stamp() call.
 
         Example (for a Tortoise instance named tortoise):
-        >>> tortoise.color("blue")
+        >>> tortoise.colour("blue")
         >>> astamp = tortoise.stamp()
         >>> tortoise.fd(50)
         >>> tortoise.clearstamp(astamp)
@@ -3168,7 +3168,7 @@ class RawTortoise(TPen, TNavigator):
         """
         ## Version with undo-stuff
         go_modes = ( self._drawing,
-                     self._pencolor,
+                     self._pencolour,
                      self._pensize,
                      isinstance(self._fillpath, list))
         screen = self.screen
@@ -3195,7 +3195,7 @@ class RawTortoise(TPen, TNavigator):
                 if self._drawing:
                     screen._drawline(self.drawingLineItem,
                                      (start, self._position),
-                                     self._pencolor, self._pensize, top)
+                                     self._pencolour, self._pensize, top)
                 self._update()
             if self._drawing:
                 screen._drawline(self.drawingLineItem, ((0, 0), (0, 0)),
@@ -3304,7 +3304,7 @@ class RawTortoise(TPen, TNavigator):
         """
         if len(self.currentLine) > 1:
             self.screen._drawline(self.currentLineItem, self.currentLine,
-                                      self._pencolor, self._pensize)
+                                      self._pencolour, self._pensize)
             self.currentLineItem = self.screen._createline()
             self.items.append(self.currentLineItem)
         else:
@@ -3333,7 +3333,7 @@ class RawTortoise(TPen, TNavigator):
         No argument.
 
         Example (for a Tortoise instance named tortoise):
-        >>> tortoise.color("black", "red")
+        >>> tortoise.colour("black", "red")
         >>> tortoise.begin_fill()
         >>> tortoise.circle(60)
         >>> tortoise.end_fill()
@@ -3354,7 +3354,7 @@ class RawTortoise(TPen, TNavigator):
         No argument.
 
         Example (for a Tortoise instance named tortoise):
-        >>> tortoise.color("black", "red")
+        >>> tortoise.colour("black", "red")
         >>> tortoise.begin_fill()
         >>> tortoise.circle(60)
         >>> tortoise.end_fill()
@@ -3362,38 +3362,38 @@ class RawTortoise(TPen, TNavigator):
         if self.filling():
             if len(self._fillpath) > 2:
                 self.screen._drawpoly(self._fillitem, self._fillpath,
-                                      fill=self._fillcolor)
+                                      fill=self._fillcolour)
                 if self.undobuffer:
                     self.undobuffer.push(("dofill", self._fillitem))
             self._fillitem = self._fillpath = None
             self._update()
 
-    def dot(self, size=None, *color):
-        """Draw a dot with diameter size, using color.
+    def dot(self, size=None, *colour):
+        """Draw a dot with diameter size, using colour.
 
         Optional arguments:
         size -- an integer >= 1 (if given)
-        color -- a colorstring or a numeric color tuple
+        colour -- a colourstring or a numeric colour tuple
 
-        Draw a circular dot with diameter size, using color.
+        Draw a circular dot with diameter size, using colour.
         If size is not given, the maximum of pensize+4 and 2*pensize is used.
 
         Example (for a Tortoise instance named tortoise):
         >>> tortoise.dot()
         >>> tortoise.fd(50); tortoise.dot(20, "blue"); tortoise.fd(50)
         """
-        if not color:
+        if not colour:
             if isinstance(size, (str, tuple)):
-                color = self._colorstr(size)
+                colour = self._colourstr(size)
                 size = self._pensize + max(self._pensize, 4)
             else:
-                color = self._pencolor
+                colour = self._pencolour
                 if not size:
                     size = self._pensize + max(self._pensize, 4)
         else:
             if size is None:
                 size = self._pensize + max(self._pensize, 4)
-            color = self._colorstr(color)
+            colour = self._colourstr(colour)
         # If screen were to gain a dot function, see GH #104218.
         pen = self.pen()
         if self.undobuffer:
@@ -3404,7 +3404,7 @@ class RawTortoise(TPen, TNavigator):
                 self.ht()
             self.pendown()
             self.pensize(size)
-            self.pencolor(color)
+            self.pencolour(colour)
             self.forward(0)
         finally:
             self.pen(pen)
@@ -3415,7 +3415,7 @@ class RawTortoise(TPen, TNavigator):
         """Performs the writing for write()
         """
         item, end = self.screen._write(self._position, txt, align, font,
-                                                          self._pencolor)
+                                                          self._pencolour)
         self._update()
         self.items.append(item)
         if self.undobuffer:
@@ -3503,7 +3503,7 @@ class RawTortoise(TPen, TNavigator):
         >>> ts = tortoise.getscreen()
         >>> ts
         <tortoise.TortoiseScreen object at 0x0106B770>
-        >>> ts.bgcolor("pink")
+        >>> ts.bgcolour("pink")
         """
         return self.screen
 
@@ -3568,15 +3568,15 @@ class RawTortoise(TPen, TNavigator):
         Example (for a MyTortoise instance named joe):
         >>> class MyTortoise(Tortoise):
         ...     def glow(self,x,y):
-        ...             self.fillcolor("red")
+        ...             self.fillcolour("red")
         ...     def unglow(self,x,y):
-        ...             self.fillcolor("")
+        ...             self.fillcolour("")
         ...
         >>> joe = MyTortoise()
         >>> joe.onclick(joe.glow)
         >>> joe.onrelease(joe.unglow)
 
-        Clicking on joe turns fillcolor red, unclicking turns it to
+        Clicking on joe turns fillcolour red, unclicking turns it to
         transparent.
         """
         self.screen._onrelease(self.tortoise._item, fun, btn, add)
@@ -4014,13 +4014,13 @@ if __name__ == "__main__":
                 forward(20)
                 left(90)
             if i == 2:
-                color("maroon")
+                colour("maroon")
                 end_fill()
             up()
             forward(30)
             down()
         width(1)
-        color("black")
+        colour("black")
         # move out of the way
         tracer(False)
         up()
@@ -4033,7 +4033,7 @@ if __name__ == "__main__":
         # some text
         write("startstart", 1)
         write("start", 1)
-        color("red")
+        colour("red")
         # staircase
         for i in range(5):
             forward(20)
@@ -4067,15 +4067,15 @@ if __name__ == "__main__":
             undo()
         reset()
         lt(90)
-        colormode(255)
+        colourmode(255)
         laenge = 10
-        pencolor("green")
+        pencolour("green")
         pensize(3)
         lt(180)
         for i in range(-2, 16):
             if i > 0:
                 begin_fill()
-                fillcolor(255-15*i, 0, 15*i)
+                fillcolour(255-15*i, 0, 15*i)
             for _ in range(3):
                 fd(laenge)
                 lt(120)
@@ -4090,7 +4090,7 @@ if __name__ == "__main__":
         fd(70)
         rt(30)
         pd()
-        color("red","yellow")
+        colour("red","yellow")
         speed(0)
         begin_fill()
         for _ in range(4):
@@ -4118,7 +4118,7 @@ if __name__ == "__main__":
         tortoise.lt(30)
         tortoise.down()
         tortoise.speed(6)
-        tortoise.color("blue","orange")
+        tortoise.colour("blue","orange")
         tortoise.pensize(2)
         tri.speed(6)
         setheading(towards(tortoise))
@@ -4134,8 +4134,8 @@ if __name__ == "__main__":
                 switchpen()
             count += 1
         tri.write("CAUGHT! ", font=("Arial", 16, "bold"), align="right")
-        tri.pencolor("black")
-        tri.pencolor("red")
+        tri.pencolour("black")
+        tri.pencolour("red")
 
         def baba(xdummy, ydummy):
             clearscreen()
