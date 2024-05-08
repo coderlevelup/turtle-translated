@@ -36,7 +36,7 @@ https://en.wikipedia.org/wiki/Comparison_of_American_and_British_English
 
 Imagine a robotic tortoise starting at (0, 0) in the x-y plane. 
 After an ``import tortoise``, give it
-the command tortoise.forward(15), and it moves (on-screen!) 15 pixels in
+the command tortoise.forwards(15), and it moves (on-screen!) 15 pixels in
 the direction it is facing, drawing a line as it moves. Give it the
 command tortoise.right(25), and it rotates in-place 25 degrees clockwise.
 
